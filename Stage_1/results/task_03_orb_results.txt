@@ -1,0 +1,45 @@
+ORB MATCHING - HPATCHES v_woman
+==================================================
+
+Dataset
+--------------------------------------------------
+Sequence: v_woman
+Image 1: 1.ppm
+Image 2: 2.ppm
+Ground truth: H_1_2
+
+ORB Features
+--------------------------------------------------
+Image 1 keypoints: 4964
+Image 2 keypoints: 5000
+Image 1 descriptor shape: (4964, 32)
+Image 2 descriptor shape: (5000, 32)
+
+Matching
+--------------------------------------------------
+KNN matches: 4964
+Lowe ratio threshold: 0.75
+Good matches: 437
+
+Ground-Truth Evaluation
+--------------------------------------------------
+Evaluation formula:
+e_i = ||p2_i - H_1_2 p1_i||_2
+
+Mean error: 22.5343 pixels
+Median error: 0.9430 pixels
+Minimum error: 0.0400 pixels
+Maximum error: 765.8625 pixels
+
+Evaluation threshold: 3.0 pixels
+Ground-truth-consistent matches: 393
+Ground-truth-inconsistent matches: 44
+Ground-truth-consistent match rate: 89.93%
+
+Error Distribution
+--------------------------------------------------
+0 - 1 px: 238
+1 - 3 px: 155
+3 - 5 px: 17
+5 - 10 px: 2
+> 10 px: 25
