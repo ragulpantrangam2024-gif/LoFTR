@@ -600,3 +600,179 @@ Simplified LoFTR
 Official pretrained LoFTR
       ↓
 SIFT vs ORB vs LoFTR evaluation
+
+Task 4 — RANSAC Geometric Verification
+Objective
+
+Descriptor matching can produce incorrect correspondences even after the Lowe ratio test.
+
+RANSAC is used to identify correspondences that agree with a common geometric transformation.
+
+The pipeline is:
+
+SIFT features
+      ↓
+SIFT descriptors
+      ↓
+BFMatcher
+      ↓
+KNN matching
+      ↓
+Lowe ratio test
+      ↓
+Candidate correspondences
+      ↓
+RANSAC
+      ↓
+Estimated homography
+      ↓
+Inliers / Outliers
+Why RANSAC?
+
+Suppose several feature matches are correct:
+
+Image 1                Image 2
+
+   A  ----------------> A
+   B  ----------------> B
+   C  ----------------> C
+   D  ----------------> D
+
+These points should approximately follow the same geometric transformation.
+
+Incorrect matches:
+
+   E  ----------------> X
+   F  ----------------> Y
+
+will generally not agree with the same transformation.
+
+RANSAC attempts to estimate the geometric model using the consistent correspondences while rejecting inconsistent matches.
+
+Homography Estimation
+
+A homography maps points between the two images:
+
+$$ p_2 \sim Hp_1 $$
+
+For this experiment, OpenCV's:
+
+cv2.findHomography()
+
+was used with:
+
+cv2.RANSAC
+
+and a reprojection threshold of:
+
+3.0 pixels
+
+The RANSAC mask identifies:
+
+1 → inlier
+0 → outlier
+RANSAC Results
+
+The SIFT matching pipeline produced:
+
+Candidate matches:
+512
+
+RANSAC classified them as:
+
+Inliers : 479
+Outliers: 33
+
+Therefore:
+
+$$ \text{RANSAC Inlier Ratio} = \frac{479}{512}\times100 $$
+RANSAC inlier ratio:
+93.55%
+RANSAC vs HPatches Ground Truth
+
+The RANSAC classification was independently compared against the HPatches ground-truth homography.
+
+Using the same 3-pixel geometric threshold:
+
+True positives : 478
+False positives: 1
+
+True negatives : 31
+False negatives: 2
+
+This gives:
+
+Precision
+$$ Precision = \frac{TP}{TP+FP} $$ $$ = \frac{478}{478+1} $$
+Precision:
+99.79%
+Recall
+$$ Recall = \frac{TP}{TP+FN} $$ $$ = \frac{478}{478+2} $$
+Recall:
+99.58%
+Important Interpretation
+
+The three metrics measure different things.
+
+RANSAC inlier ratio
+93.55%
+
+This tells us:
+
+What percentage of candidate matches were classified as RANSAC inliers?
+
+Precision
+99.79%
+
+This tells us:
+
+Of the matches RANSAC classified as inliers, how many were actually correct according to the HPatches ground truth?
+
+Recall
+99.58%
+
+This tells us:
+
+Of the genuinely correct candidate matches, how many were retained by RANSAC?
+
+Therefore:
+
+RANSAC inlier ratio ≠ RANSAC accuracy
+
+The inlier ratio and precision/recall should not be interpreted as the same metric.
+
+Estimated Homography
+
+RANSAC estimated:
+
+[[ 1.04110337e+00 -2.22886495e-02  2.24285112e+02]
+ [ 1.82794832e-01  8.65022611e-01  3.63680640e+01]
+ [ 3.55154714e-04  1.21083358e-05  1.00000000e+00]]
+
+The estimated homography is numerically close to the HPatches ground-truth homography:
+
+Ground truth:
+
+[[ 1.0405e+00 -2.2486e-02  2.2450e+02]
+ [ 1.8267e-01  8.6513e-01  3.6240e+01]
+ [ 3.5492e-04  1.2090e-05  1.0000e+00]]
+
+This indicates that the geometrically consistent SIFT correspondences provide a strong basis for estimating the transformation between the two images.
+
+RANSAC Classification
+
+The classification can be represented as:
+
+                     HPatches Ground Truth
+                    Correct       Incorrect
+
+RANSAC Inlier          478             1
+
+RANSAC Outlier           2            31
+
+This demonstrates that RANSAC successfully separated most geometrically consistent matches from the incorrect matches for this image pair.
+
+Output
+results/task_04_ransac_inliers.png
+results/task_04_ransac_outliers.png
+results/task_04_ransac_results.txt

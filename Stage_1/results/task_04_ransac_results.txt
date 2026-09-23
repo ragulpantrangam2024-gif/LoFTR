@@ -1,0 +1,25 @@
+TASK 4 - RANSAC GEOMETRIC VERIFICATION
+============================================================
+
+Ratio-test threshold: 0.75
+RANSAC threshold: 3.0 pixels
+
+Candidate matches: 512
+RANSAC inliers: 479
+RANSAC outliers: 33
+RANSAC inlier ratio: 93.55%
+
+Ground-truth classification
+----------------------------------------
+True positives: 478
+False positives: 1
+True negatives: 31
+False negatives: 2
+
+Precision: 0.9979
+Recall: 0.9958
+
+Estimated homography:
+[[ 1.04110337e+00 -2.22886495e-02  2.24285112e+02]
+ [ 1.82794832e-01  8.65022611e-01  3.63680640e+01]
+ [ 3.55154714e-04  1.21083358e-05  1.00000000e+00]]
