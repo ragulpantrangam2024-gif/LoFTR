@@ -1,0 +1,53 @@
+============================================================
+TASK 2 — CROSS-ATTENTION RESULTS
+============================================================
+
+IMAGE INFORMATION
+------------------------------------------------------------
+Original Image 1 shape: (767, 1034)
+Original Image 2 shape: (816, 1232)
+Resized Image 1 shape: (256, 256)
+Resized Image 2 shape: (256, 256)
+
+PATCH INFORMATION
+------------------------------------------------------------
+Patch size: 16 x 16
+Image 1 tokens: 256
+Image 2 tokens: 256
+Patch dimension: 256
+
+TOKEN EMBEDDINGS
+------------------------------------------------------------
+Image 1 tokens: torch.Size([256, 64])
+Image 2 tokens: torch.Size([256, 64])
+
+CROSS-ATTENTION IMAGE 1 -> IMAGE 2
+------------------------------------------------------------
+Q shape: torch.Size([256, 64])
+K shape: torch.Size([256, 64])
+V shape: torch.Size([256, 64])
+Attention shape: torch.Size([256, 256])
+Output shape: torch.Size([256, 64])
+
+ATTENTION ROW VERIFICATION
+------------------------------------------------------------
+Minimum row sum: 0.9999998211860657
+Maximum row sum: 1.000000238418579
+
+TOP 10 ATTENDED PATCHES FOR IMAGE 1 PATCH 128
+------------------------------------------------------------
+ 1. Patch  38 (row= 2, col= 6) weight=0.003948
+ 2. Patch  66 (row= 4, col= 2) weight=0.003947
+ 3. Patch 204 (row=12, col=12) weight=0.003945
+ 4. Patch 117 (row= 7, col= 5) weight=0.003943
+ 5. Patch 169 (row=10, col= 9) weight=0.003941
+ 6. Patch 102 (row= 6, col= 6) weight=0.003940
+ 7. Patch 156 (row= 9, col=12) weight=0.003937
+ 8. Patch 106 (row= 6, col=10) weight=0.003934
+ 9. Patch 114 (row= 7, col= 2) weight=0.003933
+10. Patch 124 (row= 7, col=12) weight=0.003932
+
+CROSS-ATTENTION IMAGE 2 -> IMAGE 1
+------------------------------------------------------------
+Attention shape: torch.Size([256, 256])
+Output shape: torch.Size([256, 64])

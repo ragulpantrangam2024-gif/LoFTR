@@ -320,3 +320,254 @@ This experiment intentionally does not use positional encoding.
 Therefore, the model is demonstrating the attention mechanism itself
 without explicitly providing the Transformer with the spatial
 coordinates of each patch.
+
+
+# Task 2 — Cross-Attention
+
+## Objective
+
+Task 2 extends self-attention from a single image to interactions
+between two different images.
+
+In self-attention:
+
+\[
+Q, K, V
+\]
+
+come from the same image.
+
+In cross-attention, the Query comes from one image while the Key
+and Value come from another image.
+
+```text
+Image 1                    Image 2
+   ↓                          ↓
+   Q                         K, V
+    \                         /
+     \                       /
+      ─── Cross-Attention ───
+                ↓
+        Updated representation
+
+The objective is to understand how a patch in one image can interact
+with patches in another image.
+
+Mathematical Formulation
+
+For Image 1 attending to Image 2:
+
+$$ Q_1 = X_1W_Q $$ $$ K_2 = X_2W_K $$ $$ V_2 = X_2W_V $$
+
+The cross-attention operation is:
+
+$$ Attention(1\rightarrow2) = softmax \left( \frac{Q_1K_2^T}{\sqrt{d_k}} \right)V_2 $$
+
+This produces an updated representation for Image 1 based on
+information from Image 2.
+
+The reverse direction can also be calculated:
+
+$$ Attention(2\rightarrow1) = softmax \left( \frac{Q_2K_1^T}{\sqrt{d_k}} \right)V_1 $$
+Dataset
+
+The same HPatches v_woman sequence used in Stage 1 and Task 1B
+is used:
+
+Image 1:
+datasets/hpatches-sequences-release/v_woman/1.ppm
+
+Image 2:
+datasets/hpatches-sequences-release/v_woman/2.ppm
+
+The original image dimensions are:
+
+Image 1: 767 × 1034
+Image 2: 816 × 1232
+
+Both images are resized to:
+
+256 × 256
+Image-to-Token Representation
+
+Both images are divided into:
+
+16 × 16 pixel patches
+
+Therefore:
+
+$$ 16 \times 16 = 256 $$
+
+tokens are generated for each image.
+
+Each patch contains:
+
+$$ 16 \times 16 = 256 $$
+
+pixel values.
+
+The patch representation is therefore:
+
+Image 1 patches: (256, 256)
+Image 2 patches: (256, 256)
+
+A linear layer projects each patch into a 64-dimensional embedding:
+
+Image 1 tokens: (256, 64)
+Image 2 tokens: (256, 64)
+Cross-Attention Dimensions
+
+For Image 1 → Image 2:
+
+Q: (256, 64)
+K: (256, 64)
+V: (256, 64)
+
+The similarity matrix is:
+
+$$ QK^T $$
+
+Therefore:
+
+(256, 64) × (64, 256)
+=
+(256, 256)
+
+The resulting cross-attention matrix is:
+
+256 × 256
+
+Each row represents a query patch from Image 1.
+
+Each column represents a key patch from Image 2.
+
+Therefore, every patch in Image 1 can interact with every patch in
+Image 2.
+
+Experimental Results
+Image 1 → Image 2
+Q shape:
+torch.Size([256, 64])
+
+K shape:
+torch.Size([256, 64])
+
+V shape:
+torch.Size([256, 64])
+
+Attention matrix:
+torch.Size([256, 256])
+
+Output:
+torch.Size([256, 64])
+Image 2 → Image 1
+Attention matrix:
+torch.Size([256, 256])
+
+Output:
+torch.Size([256, 64])
+Attention Normalization
+
+The attention weights are normalized using softmax.
+
+The measured row sums were:
+
+Minimum row sum:
+0.999999821
+
+Maximum row sum:
+1.000000238
+
+These values are effectively equal to 1.0.
+
+This verifies that the cross-attention weights are properly
+normalized.
+
+Patch 128 Experiment
+
+For Image 1 patch 128, the ten highest attention weights in Image 2
+were:
+
+Rank	Image 2 Patch	Row	Column	Weight
+1	38	2	6	0.003948
+2	66	4	2	0.003947
+3	204	12	12	0.003945
+4	117	7	5	0.003943
+5	169	10	9	0.003941
+6	102	6	6	0.003940
+7	156	9	12	0.003937
+8	106	6	10	0.003934
+9	114	7	2	0.003933
+10	124	7	12	0.003932
+Interpretation
+
+The cross-attention matrix demonstrates that a patch from Image 1
+can interact with all patches in Image 2.
+
+For example:
+
+Image 1 Patch 128
+        ↓
+   ┌───────────────┐
+   │ Patch 0       │
+   │ Patch 1       │
+   │ Patch 2       │
+   │ ...           │
+   │ Patch 255     │
+   └───────────────┘
+        Image 2
+
+The attention weights determine how much information from each Image 2
+patch contributes to the updated representation of Image 1 patch 128.
+
+Important Limitation
+
+The projection layers in this experiment are randomly initialized.
+
+Therefore, the highest-attention patches should not be
+interpreted as verified feature correspondences.
+
+For example, the experiment does not establish that:
+
+Image 1 Patch 128
+        ↓
+Image 2 Patch 38
+
+is a true geometric correspondence.
+
+The purpose of this task is to demonstrate the cross-attention
+mechanism, not to perform trained feature matching.
+
+Meaningful correspondences require learned feature representations
+and geometric reasoning, which will be introduced later in the
+project.
+
+Self-Attention vs Cross-Attention
+Property	Self-Attention	Cross-Attention
+Query source	Same image	Image 1
+Key source	Same image	Image 2
+Value source	Same image	Image 2
+Main purpose	Within-image interaction	Between-image interaction
+Attention matrix	Token × Token	Image 1 tokens × Image 2 tokens
+
+Conceptually:
+
+Self-Attention:
+
+Image A
+   ↓
+Q, K, V
+   ↓
+Relationships within Image A
+
+
+Cross-Attention:
+
+Image A              Image B
+   ↓                    ↓
+   Q                   K, V
+    \                  /
+     \                /
+      Cross-Attention
+            ↓
+   Information from Image B
