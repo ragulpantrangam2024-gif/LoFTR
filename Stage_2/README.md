@@ -571,3 +571,51 @@ Image A              Image B
       Cross-Attention
             ↓
    Information from Image B
+
+   # Task 3 — Positional Encoding
+
+## Objective
+
+Self-attention can compare tokens, but it does not inherently know
+the spatial position of each image patch.
+
+Positional encoding adds this information to the token representation.
+
+For this task, a 2D sinusoidal positional encoding is used.
+
+```text
+Patch Embedding
+      +
+Positional Encoding
+      ↓
+Position-aware Token
+Configuration
+Image: HPatches v_woman/1.ppm
+Image size: 256 × 256
+Patch size: 16 × 16
+Total patches: 256
+Embedding dimension: 64
+Results
+Patch tensor:                 (256, 256)
+Token embedding:              (256, 64)
+Positional encoding:          (16, 16, 64)
+Flattened positional encoding:(256, 64)
+
+After adding positional encoding:
+
+Before: (256, 64)
+After:  (256, 64)
+
+The embedding dimension remains unchanged.
+
+Observation
+
+Different patch locations receive different positional information.
+
+For example, patches in the same row share the same row encoding,
+while patches in different rows receive different row encodings.
+
+The positional encoding allows the Transformer to use both:
+
+Visual information
+Spatial position

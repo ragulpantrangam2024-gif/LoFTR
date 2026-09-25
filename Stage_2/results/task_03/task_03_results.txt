@@ -1,0 +1,55 @@
+============================================================
+TASK 3 — POSITIONAL ENCODING RESULTS
+============================================================
+
+IMAGE INFORMATION
+Original image shape: (767, 1034)
+Resized image shape: (256, 256)
+
+PATCH INFORMATION
+Patch size: 16 x 16
+Patch rows: 16
+Patch columns: 16
+Total tokens: 256
+Patch tensor shape: torch.Size([256, 256])
+
+TOKEN EMBEDDING
+Token embedding shape: torch.Size([256, 64])
+
+POSITIONAL ENCODING
+Positional encoding shape: torch.Size([16, 16, 64])
+Flattened positional encoding: torch.Size([256, 64])
+Embedding dimension: 64
+
+TOKEN REPRESENTATION
+Before position: torch.Size([256, 64])
+After position: torch.Size([256, 64])
+
+POSITIONAL ENCODING NORMS
+Minimum: 5.656854
+Maximum: 5.656855
+Mean: 5.656854
+
+TOKEN NORMS
+Mean before: 1.390383
+Mean after: 5.701447
+
+EXAMPLE POSITIONAL ENCODINGS
+
+Patch 0 (row=0, col=0)
+tensor([0., 1., 0., 1., 0., 1., 0., 1.])
+
+Patch 1 (row=0, col=1)
+tensor([0., 1., 0., 1., 0., 1., 0., 1.])
+
+Patch 16 (row=1, col=0)
+tensor([0.8415, 0.5403, 0.5332, 0.8460, 0.3110, 0.9504, 0.1769, 0.9842])
+
+Patch 17 (row=1, col=1)
+tensor([0.8415, 0.5403, 0.5332, 0.8460, 0.3110, 0.9504, 0.1769, 0.9842])
+
+Patch 136 (row=8, col=8)
+tensor([ 0.9894, -0.1455, -0.9773, -0.2120,  0.5743, -0.8186,  0.9890,  0.1476])
+
+Patch 255 (row=15, col=15)
+tensor([ 0.6503, -0.7597,  0.8358, -0.5490, -0.9995,  0.0310,  0.4566, -0.8897])
