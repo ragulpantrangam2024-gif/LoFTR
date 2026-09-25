@@ -1,0 +1,28 @@
+TASK 1B - IMAGE SELF-ATTENTION
+============================================================
+
+Original image shape: (767, 1034)
+Resized image shape: (256, 256)
+Patch size: 16 x 16
+Number of patches: 256
+Embedding dimension: 64
+
+Q shape: torch.Size([256, 64])
+K shape: torch.Size([256, 64])
+V shape: torch.Size([256, 64])
+Attention matrix shape: torch.Size([256, 256])
+Output shape: torch.Size([256, 64])
+
+Selected patch: 128
+
+Top attended patches:
+ 1. Patch 132 (row= 8, col= 4) weight=0.003943
+ 2. Patch 185 (row=11, col= 9) weight=0.003937
+ 3. Patch 105 (row= 6, col= 9) weight=0.003936
+ 4. Patch  89 (row= 5, col= 9) weight=0.003935
+ 5. Patch  19 (row= 1, col= 3) weight=0.003933
+ 6. Patch  88 (row= 5, col= 8) weight=0.003932
+ 7. Patch  22 (row= 1, col= 6) weight=0.003931
+ 8. Patch  32 (row= 2, col= 0) weight=0.003929
+ 9. Patch 199 (row=12, col= 7) weight=0.003928
+10. Patch 134 (row= 8, col= 6) weight=0.003927
