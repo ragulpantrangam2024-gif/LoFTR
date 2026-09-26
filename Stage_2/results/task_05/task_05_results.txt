@@ -1,0 +1,83 @@
+Stage 2 Task 5 — Coarse-to-Fine Matching
+=========================================
+
+CONFIGURATION
+-------------
+Original Image 1 shape: (767, 1034)
+Original Image 2 shape: (816, 1232)
+Resized image size: 256 x 256
+Coarse patch size: 16 x 16
+Fine patch size: 4 x 4
+Coarse tokens Image 1: 256
+Coarse tokens Image 2: 256
+Fine tokens Image 1: 4096
+Fine tokens Image 2: 4096
+Feature dimension: 64
+Local fine search radius: 2
+Similarity matrix shape: (256, 256)
+
+
+MATCHING RESULTS
+================
+Mutual coarse matches: 21
+Fine-refined matches: 21
+
+
+TOP COARSE MATCHES
+==================
+Image1 patch 5 -> Image2 patch 8, similarity = 0.999849
+Image1 patch 233 -> Image2 patch 195, similarity = 0.997978
+Image1 patch 99 -> Image2 patch 171, similarity = 0.997148
+Image1 patch 213 -> Image2 patch 182, similarity = 0.987852
+Image1 patch 121 -> Image2 patch 136, similarity = 0.986617
+Image1 patch 229 -> Image2 patch 165, similarity = 0.984883
+Image1 patch 179 -> Image2 patch 170, similarity = 0.983504
+Image1 patch 182 -> Image2 patch 49, similarity = 0.983133
+Image1 patch 170 -> Image2 patch 212, similarity = 0.982775
+Image1 patch 8 -> Image2 patch 36, similarity = 0.982010
+Image1 patch 57 -> Image2 patch 216, similarity = 0.981329
+Image1 patch 227 -> Image2 patch 197, similarity = 0.972213
+Image1 patch 231 -> Image2 patch 111, similarity = 0.968905
+Image1 patch 218 -> Image2 patch 206, similarity = 0.967339
+Image1 patch 106 -> Image2 patch 159, similarity = 0.963977
+Image1 patch 164 -> Image2 patch 21, similarity = 0.959555
+Image1 patch 196 -> Image2 patch 89, similarity = 0.958492
+Image1 patch 85 -> Image2 patch 198, similarity = 0.957048
+Image1 patch 46 -> Image2 patch 127, similarity = 0.951402
+Image1 patch 27 -> Image2 patch 47, similarity = 0.941961
+
+
+GROUND-TRUTH EVALUATION
+=======================
+
+COARSE MATCHING
+---------------
+Matches: 21
+Mean error: 89.4246 px
+Median error: 88.0171 px
+Min error: 2.5030 px
+Max error: 205.8958 px
+Within 1 px: 0
+Within 3 px: 1
+Within 5 px: 1
+Within 10 px: 2
+
+FINE MATCHING
+-------------
+Matches: 21
+Mean error: 91.1165 px
+Median error: 89.1049 px
+Min error: 6.4208 px
+Max error: 202.2948 px
+Within 1 px: 0
+Within 3 px: 0
+Within 5 px: 0
+Within 10 px: 1
+
+
+NOTE
+----
+This is an educational coarse-to-fine matching implementation inspired by the LoFTR pipeline.
+The feature projection layers are randomly initialized and are not trained LoFTR features.
+Therefore, the experiment demonstrates the matching mechanism rather than reproducing the performance of the original LoFTR model.
+Ground-truth errors are calculated using the HPatches H_1_2 homography after scaling it to the 256x256 resized images.

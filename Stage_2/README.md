@@ -660,3 +660,55 @@ softmax normalization.
 The encoder transforms the patch embeddings into context-aware
 representations while maintaining the same number of tokens and
 embedding dimension.
+
+# Task 5 — Coarse-to-Fine Matching
+
+## Objective
+
+Understand the coarse-to-fine matching strategy used in LoFTR-style feature matching.
+
+Pipeline:
+
+Image Patches
+→ Feature Embeddings
+→ Coarse Similarity
+→ Mutual Nearest-Neighbor Matching
+→ Local Fine Refinement
+
+## Configuration
+
+- Dataset: HPatches `v_woman`
+- Images: `1.ppm` and `2.ppm`
+- Resized image: 256×256
+- Coarse patch: 16×16
+- Fine patch: 4×4
+- Embedding dimension: 64
+- Coarse tokens: 256
+- Fine tokens: 4096
+- Fine search radius: 2 patches
+
+## Results
+
+- Similarity matrix: 256×256
+- Mutual coarse matches: 21
+- Fine-refined matches: 21
+- Coarse mean error: 89.42 px
+- Fine mean error: 91.12 px
+- Coarse matches within 3 px: 1
+- Fine matches within 3 px: 0
+
+Ground-truth evaluation uses the HPatches `H_1_2` homography after scaling it to the 256×256 images.
+
+## Observation
+
+The coarse-to-fine matching mechanism works, but the geometric accuracy is poor because the feature projections are randomly initialized and not trained.
+
+The experiment demonstrates the matching architecture rather than reproducing LoFTR performance.
+
+## Key Learning
+
+Coarse matching identifies approximate corresponding regions.
+
+Fine matching searches locally around those coarse correspondences to refine the location.
+
+Good coarse-to-fine matching requires meaningful learned feature representations.
