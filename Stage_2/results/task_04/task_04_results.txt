@@ -1,0 +1,43 @@
+============================================================
+TASK 4 — TRANSFORMER ENCODER RESULTS
+============================================================
+
+IMAGE INFORMATION
+Original image shape: (767, 1034)
+Resized image shape: (256, 256)
+
+TOKEN INFORMATION
+Number of tokens: 256
+Embedding dimension: 64
+Transformer input shape: torch.Size([1, 256, 64])
+
+TRANSFORMER CONFIGURATION
+Embedding dimension: 64
+Number of heads: 8
+Feed-forward dimension: 128
+
+ATTENTION
+Attention shape: torch.Size([8, 256, 256])
+Mean attention shape: torch.Size([256, 256])
+Head 0 shape: torch.Size([256, 256])
+
+ENCODER OUTPUT
+Encoder output shape: torch.Size([256, 64])
+Mean input norm: 5.701447
+Mean output norm: 7.999962
+
+ATTENTION ROW VERIFICATION
+Minimum row sum: 0.999999881
+Maximum row sum: 1.000000119
+
+TOP 10 ATTENDED PATCHES FOR PATCH 128
+ 1. Patch 255 (row=15, col=15) weight=0.004366
+ 2. Patch 254 (row=15, col=14) weight=0.004333
+ 3. Patch 239 (row=14, col=15) weight=0.004304
+ 4. Patch 238 (row=14, col=14) weight=0.004263
+ 5. Patch 243 (row=15, col= 3) weight=0.004233
+ 6. Patch 242 (row=15, col= 2) weight=0.004220
+ 7. Patch 226 (row=14, col= 2) weight=0.004203
+ 8. Patch 223 (row=13, col=15) weight=0.004193
+ 9. Patch 228 (row=14, col= 4) weight=0.004183
+10. Patch 227 (row=14, col= 3) weight=0.004180

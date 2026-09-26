@@ -619,3 +619,44 @@ The positional encoding allows the Transformer to use both:
 
 Visual information
 Spatial position
+
+# Task 4 — Transformer Encoder
+
+## Objective
+
+Task 4 combines the concepts from the previous tasks into a basic
+Transformer Encoder block.
+
+```text
+Patch Embeddings
+      +
+Positional Encoding
+      ↓
+Multi-Head Self-Attention
+      ↓
+Residual + LayerNorm
+      ↓
+Feed-Forward Network
+      ↓
+Residual + LayerNorm
+      ↓
+Context-aware Features
+Configuration
+Image: HPatches v_woman/1.ppm
+Image size: 256 × 256
+Patch size: 16 × 16
+Total tokens: 256
+Embedding dimension: 64
+Attention heads: 8
+Feed-forward dimension: 128
+Results
+Input:          (1, 256, 64)
+Attention:      (8, 256, 256)
+Encoder output: (256, 64)
+
+Attention row sums were approximately 1.0, confirming correct
+softmax normalization.
+
+The encoder transforms the patch embeddings into context-aware
+representations while maintaining the same number of tokens and
+embedding dimension.
