@@ -1,0 +1,56 @@
+Stage 3 Task 1 — CNN Feature Extraction
+=========================================
+
+INPUT IMAGES
+------------
+Dataset sequence: v_soldiers
+Image 1 original shape: (1290, 968)
+Image 2 original shape: (1290, 968)
+Resized shape: (256, 256)
+
+CNN ARCHITECTURE
+----------------
+Conv2D: 1 -> 32, kernel=3, padding=1
+ReLU
+Conv2D: 32 -> 64, kernel=3, padding=1
+ReLU
+MaxPool2D: kernel=2, stride=2
+Conv2D: 64 -> 64, kernel=3, padding=1
+ReLU
+
+FEATURE SHAPES — IMAGE 1
+-------------------------
+conv1: (1, 32, 256, 256)
+conv2: (1, 64, 256, 256)
+pool: (1, 64, 128, 128)
+conv3: (1, 64, 128, 128)
+output: (1, 64, 128, 128)
+
+FEATURE SHAPES — IMAGE 2
+-------------------------
+conv1: (1, 32, 256, 256)
+conv2: (1, 64, 256, 256)
+pool: (1, 64, 128, 128)
+conv3: (1, 64, 128, 128)
+output: (1, 64, 128, 128)
+
+FEATURE STATISTICS — IMAGE 1
+-----------------------------
+mean: 0.026872
+std: 0.034902
+min: 0.000000
+max: 0.184243
+mean_abs: 0.026872
+
+FEATURE STATISTICS — IMAGE 2
+-----------------------------
+mean: 0.026534
+std: 0.034529
+min: 0.000000
+max: 0.185458
+mean_abs: 0.026534
+
+NOTE
+----
+The CNN is randomly initialized and not trained.
+Therefore, the feature maps demonstrate the architecture and dense spatial representation, not learned semantic or correspondence features.
