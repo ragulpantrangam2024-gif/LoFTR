@@ -1,0 +1,99 @@
+Stage 3 - Task 7
+Quantitative Evaluation
+==============================
+
+Dataset: HPatches v_soldiers
+Images: 1.ppm and 2.ppm
+Original image 1 shape: (1290, 968)
+Original image 2 shape: (1290, 968)
+Resized shape: (256, 256)
+
+Coarse grid: 16x16
+Fine feature grid: 128x128
+Embedding dimension: 64
+Attention heads: 8
+Fine search radius: 4
+Geometric correctness threshold: 10.0 px
+
+Valid GT source tokens: 209
+
+Threshold Results
+------------------------------
+
+Threshold: 0.50
+Coarse matches: 221
+Coarse correct: 10
+Coarse precision: 4.52%
+Coarse recall: 4.78%
+Coarse mean error: 35.41706376162793
+Coarse median error: 38.41481170501191
+Fine matches: 221
+Fine correct: 6
+Fine precision: 2.71%
+Fine recall: 2.87%
+Fine mean error: 35.10145254329985
+Fine median error: 36.327599530936936
+
+Threshold: 0.60
+Coarse matches: 221
+Coarse correct: 10
+Coarse precision: 4.52%
+Coarse recall: 4.78%
+Coarse mean error: 35.41706376162793
+Coarse median error: 38.41481170501191
+Fine matches: 221
+Fine correct: 6
+Fine precision: 2.71%
+Fine recall: 2.87%
+Fine mean error: 35.10145254329985
+Fine median error: 36.327599530936936
+
+Threshold: 0.70
+Coarse matches: 221
+Coarse correct: 10
+Coarse precision: 4.52%
+Coarse recall: 4.78%
+Coarse mean error: 35.41706376162793
+Coarse median error: 38.41481170501191
+Fine matches: 221
+Fine correct: 6
+Fine precision: 2.71%
+Fine recall: 2.87%
+Fine mean error: 35.10145254329985
+Fine median error: 36.327599530936936
+
+Threshold: 0.75
+Coarse matches: 215
+Coarse correct: 10
+Coarse precision: 4.65%
+Coarse recall: 4.78%
+Coarse mean error: 35.128025840912784
+Coarse median error: 38.15481158860972
+Fine matches: 215
+Fine correct: 6
+Fine precision: 2.79%
+Fine recall: 2.87%
+Fine mean error: 34.84061514415651
+Fine median error: 36.327599530936936
+
+Threshold: 0.80
+Coarse matches: 45
+Coarse correct: 10
+Coarse precision: 22.22%
+Coarse recall: 4.78%
+Coarse mean error: 24.001006437261832
+Coarse median error: 17.29446822186194
+Fine matches: 45
+Fine correct: 3
+Fine precision: 6.67%
+Fine recall: 1.44%
+Fine mean error: 25.824004575769035
+Fine median error: 24.096421640997498
+
+
+Interpretation
+------------------------------
+The CNN and Transformer are randomly initialized and untrained.
+Therefore the measurements evaluate the implemented pipeline rather than a trained LoFTR model.
+Fine refinement is performed around the predicted coarse target location, not the ground-truth location.
+The geometric recall denominator is the number of source coarse-token centers whose homography projection lies inside the target image.

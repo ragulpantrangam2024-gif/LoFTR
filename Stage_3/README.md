@@ -353,3 +353,134 @@ Fine Refinement
 The experiment demonstrates the architectural concepts of detector-free dense matching and coarse-to-fine correspondence refinement.
 
 It does not reproduce the performance of the official pretrained LoFTR model.
+
+## Task 7 — Quantitative Evaluation
+
+### Objective
+
+Task 7 performs a quantitative evaluation of the complete simplified LoFTR pipeline developed in Stage 3.
+
+The evaluation uses:
+
+- HPatches sequence: `v_soldiers`
+- Images: `1.ppm` and `2.ppm`
+- Image size after resizing: `256 × 256`
+- Coarse grid: `16 × 16`
+- Coarse tokens: `256`
+- Feature dimension: `64`
+- Fine feature map: `128 × 128`
+- Fine search radius: `4` feature pixels
+- Geometric correctness threshold: `10 px`
+
+The evaluation measures both coarse matching and fine-level refinement.
+
+### Evaluation Pipeline
+
+```text
+Image 1
+   ↓
+CNN Feature Extraction
+   ↓
+Coarse Feature Representation
+   ↓
+Transformer Contextualization
+   ↓
+Cosine Similarity
+   ↓
+Mutual Nearest-Neighbor Matching
+   ↓
+Similarity Threshold
+   ↓
+Coarse Geometric Evaluation
+   ↓
+Fine Local Refinement
+   ↓
+Fine Geometric Evaluation
+Homography Evaluation
+
+The HPatches ground-truth homography H_1_2 was used to transform source-image coordinates into the target-image coordinate system.
+
+Because the images are resized to 256 × 256, the original homography was converted using:
+
+$$ H_{resized}=S_2H_{original}S_1^{-1} $$
+
+where S1 and S2 represent the original-to-resized coordinate transformations.
+
+Threshold Sensitivity
+
+The similarity thresholds evaluated were:
+
+0.50
+0.60
+0.70
+0.75
+0.80
+
+Results:
+
+Threshold	Coarse Matches	Correct ≤10 px	Precision	Recall	Mean Error
+0.50	221	10	4.52%	4.78%	35.42 px
+0.60	221	10	4.52%	4.78%	35.42 px
+0.70	221	10	4.52%	4.78%	35.42 px
+0.75	215	10	4.65%	4.78%	35.13 px
+0.80	45	10	22.22%	4.78%	24.00 px
+
+At the highest evaluated threshold of 0.80, the number of accepted coarse matches decreased substantially while the number of geometrically correct matches remained unchanged.
+
+Consequently, coarse precision increased from 4.52% at thresholds 0.50–0.70 to 22.22% at 0.80.
+
+However, recall remained 4.78%.
+
+Fine-Level Evaluation
+
+The fine stage was evaluated using the predicted coarse target locations.
+
+At threshold 0.80:
+
+Fine matches:       45
+Correct ≤10 px:      3
+Fine precision:      6.67%
+Mean error:         25.82 px
+Median error:       24.10 px
+Within 3 px:          0
+Within 5 px:          0
+Within 10 px:         3
+
+The fine stage therefore did not improve the geometric accuracy in this experiment.
+
+Interpretation
+
+The CNN and Transformer used in Stage 3 are randomly initialized and untrained.
+
+Therefore, these results should not be interpreted as the performance of a trained LoFTR model.
+
+The experiment demonstrates that:
+
+Dense CNN features can be extracted.
+Dense features can be converted into coarse tokens.
+Transformer self-attention and cross-attention can contextualize the tokens.
+A similarity matrix can be constructed.
+Mutual nearest-neighbor coarse matching can be performed.
+A similarity threshold can control the number of accepted matches.
+Predicted coarse matches can be passed to a local fine-search stage.
+Homography-based geometric evaluation can quantify correspondence quality.
+
+The low precision and recall demonstrate the limitation of using randomly initialized, untrained feature representations.
+
+At threshold 0.80, coarse precision reached 22.22%, but recall remained only 4.78%. Fine refinement reduced the precision to 6.67%.
+
+This indicates that the fine matching mechanism itself cannot compensate for poor underlying feature representations.
+
+Important Experimental Limitation
+
+Task 5 used ground-truth-guided fine search locations and therefore its 82% within 10 px result should not be interpreted as end-to-end matching performance.
+
+Task 7 instead evaluates fine refinement around predicted coarse locations and is therefore the more appropriate experiment for evaluating the complete pipeline.
+
+Conclusion
+
+Stage 3 successfully implements an educational simplified LoFTR-style pipeline from dense CNN feature extraction through Transformer matching, coarse matching, fine refinement, and quantitative geometric evaluation.
+
+However, the experiment also demonstrates the distinction between implementing an architecture and obtaining useful learned representations.
+
+The current model is untrained. Meaningful correspondence performance requires training or pretrained feature representations.
