@@ -1,0 +1,31 @@
+Stage 3 - Task 3: Transformer Matching Module
+============================================================
+
+Dataset: HPatches v_soldiers
+Images: 1.ppm and 2.ppm
+
+Image 1 original shape: (1290, 968)
+Image 2 original shape: (1290, 968)
+
+CNN feature map: (1, 64, 128, 128)
+Coarse feature map: (1, 64, 16, 16)
+Coarse tokens: (1, 256, 64)
+
+Embedding dimension: 64
+Attention heads: 8
+
+Transformer output image 1: (1, 256, 64)
+Transformer output image 2: (1, 256, 64)
+
+Self-attention shape: (1, 8, 256, 256)
+Cross-attention shape: (1, 8, 256, 256)
+
+Self-attention row sum min: 0.999999762
+Self-attention row sum max: 1.000000238
+Cross-attention row sum min: 0.999999762
+Cross-attention row sum max: 1.000000238
+
+Mean input token norm image 1: 5.779046
+Mean input token norm image 2: 5.777876
+Mean output token norm image 1: 7.999965
+Mean output token norm image 2: 7.999962

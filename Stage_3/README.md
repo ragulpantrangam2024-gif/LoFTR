@@ -88,3 +88,68 @@ Unlike SIFT or ORB, the representation does not depend on explicitly detecting k
 2D positional encoding provides the Transformer with information about the spatial location of each feature token.
 
 The CNN is randomly initialized and untrained, so these features do not represent learned semantic correspondences. The task demonstrates the representation mechanism rather than LoFTR-level matching performance.
+
+## Task 3 — Transformer Matching Module
+
+### Objective
+
+Introduce self-attention and cross-attention so that dense features from the two images can exchange contextual information.
+
+### Pipeline
+
+Image  
+→ CNN  
+→ Coarse Feature Map  
+→ Dense Tokens  
+→ Positional Encoding  
+→ Self-Attention  
+→ Cross-Attention  
+→ Contextualized Features
+
+### Configuration
+
+- Dataset: HPatches `v_soldiers`
+- Images: `1.ppm` and `2.ppm`
+- Input size: 256×256
+- CNN feature map: `[1,64,128,128]`
+- Coarse feature map: `[1,64,16,16]`
+- Coarse tokens: `[1,256,64]`
+- Embedding dimension: 64
+- Attention heads: 8
+
+### Results
+
+Transformer output:
+
+```text
+Image 1: [1,256,64]
+Image 2: [1,256,64]
+
+Self-attention:
+
+Image 1: [1,8,256,256]
+Image 2: [1,8,256,256]
+
+Cross-attention:
+
+Image 1 → Image 2: [1,8,256,256]
+Image 2 → Image 1: [1,8,256,256]
+
+Attention row sums were approximately 1.0:
+
+Self-attention:
+min = 0.99999976
+max = 1.00000024
+
+Cross-attention:
+min = 0.99999976
+max = 1.00000024
+Interpretation
+
+Self-attention allows features within each image to exchange contextual information.
+
+Cross-attention allows features from one image to interact with features from the other image.
+
+The implementation uses a reduced 16×16 coarse representation because full attention over 16,384 tokens would require a very large 16384 × 16384 attention matrix.
+
+The CNN and Transformer are randomly initialized and untrained. Therefore, the attention maps demonstrate the mechanism but should not yet be interpreted as meaningful image correspondences.
