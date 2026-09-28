@@ -1,0 +1,25 @@
+Stage 3 - Task 2: Dense Feature Representation
+============================================================
+
+Dataset: HPatches v_soldiers
+Images: 1.ppm and 2.ppm
+
+Image 1 original shape: (1290, 968)
+Image 2 original shape: (1290, 968)
+Resized shape: (256, 256)
+
+Image 1 CNN feature map: (1, 64, 128, 128)
+Image 2 CNN feature map: (1, 64, 128, 128)
+
+Image 1 dense tokens: (1, 16384, 64)
+Image 2 dense tokens: (1, 16384, 64)
+
+Positional encoding: (128, 128, 64)
+Position-aware tokens image 1: (1, 16384, 64)
+Position-aware tokens image 2: (1, 16384, 64)
+
+Image 1 mean feature-token norm: 0.351218
+Image 2 mean feature-token norm: 0.347213
+Mean positional encoding norm: 5.656853
+Image 1 mean position-aware token norm: 5.756231
+Image 2 mean position-aware token norm: 5.754798
