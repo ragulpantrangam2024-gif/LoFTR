@@ -1,0 +1,22 @@
+Stage 3 - Task 4: Coarse Matching
+============================================================
+
+Dataset: HPatches v_soldiers
+Images: 1.ppm and 2.ppm
+
+Image 1 original shape: (1290, 968)
+Image 2 original shape: (1290, 968)
+
+Coarse tokens image 1: (1, 256, 64)
+Coarse tokens image 2: (1, 256, 64)
+Similarity matrix: (1, 256, 256)
+
+Similarity threshold: 0.8
+Mutual coarse matches: 0
+
+No matches passed the similarity threshold.
+
+Resized homography:
+[[ 1.33841433e+00  3.30252633e-02  2.53109992e+01]
+ [ 1.52914776e-01  1.49312086e+00 -5.48893989e+01]
+ [ 1.56444868e-03  2.11807214e-04  1.00000000e+00]]

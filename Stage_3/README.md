@@ -153,3 +153,62 @@ Cross-attention allows features from one image to interact with features from th
 The implementation uses a reduced 16×16 coarse representation because full attention over 16,384 tokens would require a very large 16384 × 16384 attention matrix.
 
 The CNN and Transformer are randomly initialized and untrained. Therefore, the attention maps demonstrate the mechanism but should not yet be interpreted as meaningful image correspondences.
+
+## Task 4 — Coarse Matching
+
+### Objective
+
+Use the contextualized Transformer features to establish coarse correspondences between the two images.
+
+### Pipeline
+
+Contextualized Features  
+→ L2 Normalization  
+→ Cosine Similarity  
+→ Similarity Matrix  
+→ Mutual Nearest-Neighbor Matching  
+→ Confidence Filtering  
+→ Geometric Evaluation
+
+### Configuration
+
+- Dataset: HPatches `v_soldiers`
+- Images: `1.ppm` and `2.ppm`
+- Coarse tokens: 256
+- Feature dimension: 64
+- Similarity metric: cosine similarity
+- Similarity threshold: 0.80
+- Ground-truth source: HPatches `H_1_2`
+- Geometric evaluation threshold: 10 pixels
+
+### Results
+
+Similarity matrix:
+
+```text
+[1,256,256]
+
+Similarity statistics:
+
+Minimum: 0.0893
+Maximum: 0.7990
+Mean:    0.5031
+
+Using a similarity threshold of 0.80:
+
+Mutual coarse matches: 0
+Interpretation
+
+The coarse matching mechanism was successfully implemented, including similarity computation, mutual nearest-neighbor matching, and homography-based geometric evaluation.
+
+However, no matches passed the confidence threshold.
+
+The maximum similarity (0.7990) was slightly below the selected threshold (0.80).
+
+More importantly, the CNN and Transformer are randomly initialized and untrained. Therefore, the resulting features are not expected to provide reliable image correspondences.
+
+This demonstrates an important principle of learned feature matching:
+
+The attention mechanism provides feature interaction, but meaningful correspondence requires learned feature representations.
+
+The HPatches ground-truth homography was successfully loaded and scaled to the 256×256 image resolution.
