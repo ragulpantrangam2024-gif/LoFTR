@@ -212,3 +212,58 @@ This demonstrates an important principle of learned feature matching:
 The attention mechanism provides feature interaction, but meaningful correspondence requires learned feature representations.
 
 The HPatches ground-truth homography was successfully loaded and scaled to the 256×256 image resolution.
+
+## Task 5 — Fine-Level Refinement
+
+### Objective
+
+Demonstrate local fine-level refinement after obtaining an approximate coarse correspondence.
+
+### Pipeline
+
+Ground-Truth-Guided Coarse Location  
+→ Fine Feature Map  
+→ Local 9×9 Search Window  
+→ Cosine Similarity  
+→ Best Fine Location  
+→ Geometric Error Evaluation
+
+### Configuration
+
+- Dataset: HPatches `v_soldiers`
+- Images: `1.ppm` and `2.ppm`
+- Fine feature map: `[1,64,128,128]`
+- Feature dimension: 64
+- Ground-truth-guided coarse points: 50
+- Fine search radius: 4 feature pixels
+- Fine search window: 9×9
+
+### Results
+
+```text
+Refined matches: 50
+
+Mean error: 6.68 px
+Median error: 7.64 px
+
+Within 3 px: 12 / 50
+Within 5 px: 16 / 50
+Within 10 px: 41 / 50
+
+Accuracy within 10 px: 82.0%
+Mean local similarity: 0.99977
+Important Experimental Note
+
+The coarse locations used in this experiment were generated using the HPatches ground-truth homography.
+
+Therefore, this is not an end-to-end matching evaluation.
+
+The experiment evaluates the fine-level local refinement mechanism when an approximately correct coarse location is already available.
+
+Interpretation
+
+The fine-level refinement produced 50 refined correspondences, with 41 of them within 10 pixels of the ground-truth location.
+
+However, the CNN is randomly initialized and untrained. The very high local similarity (0.99977) should therefore not be interpreted as evidence of learned visual correspondence.
+
+The experiment demonstrates the coarse-to-fine refinement mechanism rather than LoFTR-level performance.
