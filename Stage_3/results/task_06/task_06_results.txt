@@ -1,0 +1,34 @@
+Stage 3 - Task 6: End-to-End Simplified LoFTR
+============================================================
+
+Dataset: HPatches v_soldiers
+Images: 1.ppm and 2.ppm
+
+IMPORTANT:
+This is a simplified educational/research implementation inspired by LoFTR.
+It is not the official LoFTR architecture or pretrained model.
+
+CNN feature map: (1, 64, 128, 128)
+Coarse tokens: (1, 256, 64)
+Transformer output: (1, 256, 64)
+Similarity matrix: (1, 256, 256)
+
+Similarity threshold: 0.8
+Predicted coarse matches: 0
+
+No confident predicted coarse matches.
+
+Oracle-guided fine experiment:
+Oracle coarse points: 50
+Fine refined points: 50
+
+The oracle fine experiment uses ground-truth homography to select the coarse search locations.
+Therefore its results should not be interpreted as end-to-end prediction accuracy.
+
+Fine mean error: 6.675594 px
+Fine median error: 7.638905 px
+Fine within 3 px: 12 / 50
+Fine within 5 px: 16 / 50
+Fine within 10 px: 41 / 50
+Fine accuracy within 10 px: 82.0000%
+Mean fine similarity: 0.999770

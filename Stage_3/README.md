@@ -267,3 +267,89 @@ The fine-level refinement produced 50 refined correspondences, with 41 of them w
 However, the CNN is randomly initialized and untrained. The very high local similarity (0.99977) should therefore not be interpreted as evidence of learned visual correspondence.
 
 The experiment demonstrates the coarse-to-fine refinement mechanism rather than LoFTR-level performance.
+
+## Task 6 — End-to-End Simplified LoFTR
+
+### Objective
+
+Integrate the CNN feature extractor, dense representation, Transformer matching module, coarse matching, and fine refinement into one simplified end-to-end pipeline.
+
+### Pipeline
+
+Image Pair  
+→ CNN Feature Extraction  
+→ Dense Feature Representation  
+→ Coarse Tokens + Positional Encoding  
+→ Self-Attention  
+→ Cross-Attention  
+→ Coarse Similarity  
+→ Mutual Nearest-Neighbor Matching  
+→ Fine-Level Refinement
+
+### Configuration
+
+- Dataset: HPatches `v_soldiers`
+- Images: `1.ppm` and `2.ppm`
+- CNN feature map: `[1,64,128,128]`
+- Coarse tokens: `[1,256,64]`
+- Transformer output: `[1,256,64]`
+- Similarity matrix: `[1,256,256]`
+- Similarity threshold: `0.80`
+- Fine search radius: 4 feature pixels
+
+### End-to-End Coarse Results
+
+```text
+Similarity minimum: 0.0893
+Similarity maximum: 0.7990
+Similarity mean:    0.5031
+
+Predicted coarse matches: 0
+
+The maximum similarity was slightly below the selected threshold of 0.80.
+
+Therefore, the untrained simplified pipeline produced no confident predicted coarse correspondences.
+
+Oracle-Guided Fine Results
+
+Because the predicted coarse stage produced no matches, a separate oracle-guided experiment was performed.
+
+Ground-truth homography was used to select 50 approximate coarse locations. These locations were then passed to the fine-level refinement stage.
+
+Oracle coarse points: 50
+Fine refined points: 50
+
+Mean error: 6.68 px
+Median error: 7.64 px
+
+Within 3 px: 12 / 50
+Within 5 px: 16 / 50
+Within 10 px: 41 / 50
+
+Accuracy within 10 px: 82.0%
+Mean fine similarity: 0.99977
+Important Interpretation
+
+The 82% fine-stage result is not end-to-end matching accuracy.
+
+The coarse locations for this experiment were obtained from the HPatches ground-truth homography. Therefore, this experiment evaluates the fine refinement mechanism after providing an approximately correct location.
+
+The CNN and Transformer are randomly initialized and untrained. Consequently, the model does not currently learn meaningful visual correspondences.
+
+Overall Observation
+
+The complete simplified LoFTR pipeline has now been implemented:
+
+CNN
+ ↓
+Dense Features
+ ↓
+Transformer
+ ↓
+Coarse Matching
+ ↓
+Fine Refinement
+
+The experiment demonstrates the architectural concepts of detector-free dense matching and coarse-to-fine correspondence refinement.
+
+It does not reproduce the performance of the official pretrained LoFTR model.
