@@ -1,0 +1,40 @@
+Stage 4 - Task 3
+Quantitative Evaluation of Official Pretrained LoFTR
+============================================================
+
+Dataset: HPatches v_soldiers
+Total LoFTR matches: 206
+
+Original image shapes:
+  Image 0: (1290, 968)
+  Image 1: (1290, 968)
+
+Resized image shapes:
+  Image 0: (640, 480)
+  Image 1: (640, 480)
+
+Evaluation homography:
+[[ 1.33841433e+00  2.47689475e-02  4.74581235e+01]
+ [ 2.03886368e-01  1.49312086e+00 -1.37223497e+02]
+ [ 8.34372629e-04  8.47228855e-05  1.00000000e+00]]
+
+Mean geometric error: 2.527929 px
+Median geometric error: 2.255069 px
+Minimum error: 0.237709 px
+Maximum error: 11.057095 px
+
+Within 1 px: 32/206 (15.53%)
+Within 3 px: 140/206 (67.96%)
+Within 5 px: 196/206 (95.15%)
+Within 10 px: 205/206 (99.51%)
+
+3 px geometric inliers: 140
+3 px precision: 67.9612%
+Candidate recall at 3 px: 67.9612%
+
+Interpretation:
+Geometric error measures the distance between the LoFTR predicted point in image 1 and the point obtained by projecting the image-0 point using the HPatches ground-truth homography.
+
+The 3 px precision value represents the fraction of evaluated LoFTR correspondences that are consistent with the ground-truth homography within 3 pixels.
+
+Candidate recall is reported here as a candidate-level geometric retention measure. It should not be interpreted as recall over all possible image correspondences.
