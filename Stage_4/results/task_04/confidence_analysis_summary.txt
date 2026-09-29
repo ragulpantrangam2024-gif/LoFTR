@@ -1,0 +1,109 @@
+Stage 4 - Task 4
+LoFTR Confidence Threshold Analysis
+============================================================
+
+Total LoFTR matches: 206
+Minimum confidence: 0.201274
+Maximum confidence: 0.567200
+Mean confidence: 0.290910
+Median confidence: 0.253034
+
+Threshold analysis
+------------------------------------------------------------
+
+Confidence threshold: 0.20
+Retained matches: 206
+Retained percentage: 100.00%
+Mean confidence: 0.290910
+Mean geometric error: 2.5279 px
+Median geometric error: 2.2551 px
+Within 1 px: 32/206 (15.53%)
+Within 3 px: 140/206 (67.96%)
+Within 5 px: 196/206 (95.15%)
+Within 10 px: 205/206 (99.51%)
+
+Confidence threshold: 0.25
+Retained matches: 108
+Retained percentage: 52.43%
+Mean confidence: 0.350935
+Mean geometric error: 2.3332 px
+Median geometric error: 2.1377 px
+Within 1 px: 17/108 (15.74%)
+Within 3 px: 78/108 (72.22%)
+Within 5 px: 104/108 (96.30%)
+Within 10 px: 108/108 (100.00%)
+
+Confidence threshold: 0.30
+Retained matches: 69
+Retained percentage: 33.50%
+Mean confidence: 0.395039
+Mean geometric error: 2.2080 px
+Median geometric error: 2.0549 px
+Within 1 px: 13/69 (18.84%)
+Within 3 px: 49/69 (71.01%)
+Within 5 px: 68/69 (98.55%)
+Within 10 px: 69/69 (100.00%)
+
+Confidence threshold: 0.35
+Retained matches: 46
+Retained percentage: 22.33%
+Mean confidence: 0.432599
+Mean geometric error: 2.0382 px
+Median geometric error: 1.7694 px
+Within 1 px: 7/46 (15.22%)
+Within 3 px: 36/46 (78.26%)
+Within 5 px: 45/46 (97.83%)
+Within 10 px: 46/46 (100.00%)
+
+Confidence threshold: 0.40
+Retained matches: 29
+Retained percentage: 14.08%
+Mean confidence: 0.468766
+Mean geometric error: 1.9649 px
+Median geometric error: 1.5044 px
+Within 1 px: 6/29 (20.69%)
+Within 3 px: 22/29 (75.86%)
+Within 5 px: 28/29 (96.55%)
+Within 10 px: 29/29 (100.00%)
+
+Confidence threshold: 0.45
+Retained matches: 17
+Retained percentage: 8.25%
+Mean confidence: 0.500913
+Mean geometric error: 1.6731 px
+Median geometric error: 1.3475 px
+Within 1 px: 5/17 (29.41%)
+Within 3 px: 15/17 (88.24%)
+Within 5 px: 16/17 (94.12%)
+Within 10 px: 17/17 (100.00%)
+
+Confidence threshold: 0.50
+Retained matches: 9
+Retained percentage: 4.37%
+Mean confidence: 0.525383
+Mean geometric error: 1.5204 px
+Median geometric error: 1.2524 px
+Within 1 px: 2/9 (22.22%)
+Within 3 px: 8/9 (88.89%)
+Within 5 px: 9/9 (100.00%)
+Within 10 px: 9/9 (100.00%)
+
+Confidence threshold: 0.55
+Retained matches: 1
+Retained percentage: 0.49%
+Mean confidence: 0.567200
+Mean geometric error: 2.2479 px
+Median geometric error: 2.2479 px
+Within 1 px: 0/1 (0.00%)
+Within 3 px: 1/1 (100.00%)
+Within 5 px: 1/1 (100.00%)
+Within 10 px: 1/1 (100.00%)
+
+
+Interpretation
+------------------------------------------------------------
+Increasing the LoFTR confidence threshold removes lower-confidence correspondences. The resulting change in geometric error and geometric inlier rate shows how useful the model confidence is as a filter for correspondence quality.
+
+The 3-pixel geometric inlier rate is used as the primary correctness measure. It represents the fraction of retained LoFTR matches that are consistent with the HPatches ground-truth homography within 3 pixels.
+
+A higher confidence threshold may improve geometric precision while reducing the number of available correspondences. Therefore, confidence filtering should be interpreted as a quality-versus-quantity trade-off rather than as an unconditional improvement.
