@@ -5,6 +5,9 @@
 # Datasets
 datasets/
 
+# weights
+official_loftr/
+
 # Python
 __pycache__/
 *.pyc

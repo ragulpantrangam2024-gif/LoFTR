@@ -100,3 +100,171 @@ The architecture components operate correctly from a tensor and computational pe
 However, the CNN and Transformer in this task are randomly initialized and untrained. Therefore, the 256 mutual matches must not be interpreted as 256 correct image correspondences.
 
 The purpose of this task is to understand the flow of dense features through positional encoding, self-attention, cross-attention, and coarse matching.
+
+# Stage 4 — Official Pretrained LoFTR and Research Evaluation
+
+## Task 2 — Official Pretrained LoFTR Inference
+
+### Objective
+
+The objective of this task is to run the official pretrained **LoFTR (Detector-Free Local Feature Matching with Transformers)** implementation on real image pairs.
+
+Unlike the simplified LoFTR implementation developed in Stage 3, this task uses the official ZJU3DV LoFTR implementation together with a pretrained checkpoint.
+
+This establishes a baseline for evaluating the performance of a trained LoFTR model before performing quantitative geometric evaluation.
+
+---
+
+## Official Implementation
+
+The official LoFTR implementation is used from the ZJU3DV LoFTR repository.
+
+The external implementation is kept separately under:
+
+```text
+official_loftr/
+
+The pretrained model used in this task is:
+
+indoor_ds.ckpt
+
+The checkpoint is stored locally under:
+
+official_loftr/
+└── weights/
+    └── indoor_ds.ckpt
+
+The pretrained model and external repository are not included in the project's Git history.
+
+Dataset
+
+The experiment uses the HPatches sequence:
+
+datasets/
+└── hpatches-sequences-release/
+    └── v_soldiers/
+        ├── 1.ppm
+        ├── 2.ppm
+        └── H_1_2
+
+The image pair is:
+
+Image 0: 1.ppm
+Image 1: 2.ppm
+
+The HPatches homography H_1_2 will be used in the following task for quantitative geometric evaluation.
+
+Input Images
+
+Original image dimensions:
+
+Image 0: 1290 × 968
+Image 1: 1290 × 968
+
+Because the inference was performed on a CPU system, the images were resized while preserving their aspect ratio.
+
+The maximum image dimension was limited to:
+
+640 pixels
+
+The resulting images were:
+
+Image 0: 640 × 480
+Image 1: 640 × 480
+
+The dimensions were adjusted to be divisible by 8, as required by the LoFTR processing pipeline.
+
+Model
+
+The official pretrained LoFTR model was loaded using:
+
+indoor_ds.ckpt
+
+The model was executed in evaluation mode without additional training or fine-tuning.
+
+The inference device was:
+
+CPU
+Processing Pipeline
+
+The processing pipeline used in this task is:
+
+HPatches image pair
+        │
+        ▼
+Grayscale conversion
+        │
+        ▼
+Resize to 640 × 480
+        │
+        ▼
+Convert images to tensors
+        │
+        ▼
+Official pretrained LoFTR
+        │
+        ├── Feature extraction
+        ├── Coarse-level Transformer matching
+        ├── Fine-level refinement
+        └── Confidence estimation
+        │
+        ▼
+Final LoFTR correspondences
+Implementation Details
+
+The task script is:
+
+Stage_4/
+└── task_02_official_loftr_inference.py
+
+The script:
+
+Loads the official pretrained LoFTR implementation.
+Loads indoor_ds.ckpt.
+Loads the HPatches v_soldiers image pair.
+Converts the images to grayscale.
+Resizes the images to a maximum dimension of 640 pixels.
+Runs pretrained LoFTR inference.
+Extracts:
+matched coordinates in image 0
+matched coordinates in image 1
+matching confidence values
+Measures model loading and inference time.
+Saves the raw matches.
+Generates a qualitative visualization.
+Saves a text summary of the experiment.
+Results
+Model Loading
+Model loading time: 0.70 seconds
+Inference
+Device: CPU
+Inference time: 14.06 seconds
+Matching Results
+Number of matches: 206
+
+Confidence statistics:
+
+Minimum confidence: 0.201274
+Maximum confidence: 0.567200
+Mean confidence:    0.290910
+Median confidence:  0.253034
+
+The confidence values reported here are the raw confidence values returned by the pretrained LoFTR model.
+
+Qualitative Visualization
+
+The generated visualization contains the LoFTR correspondences between the two images.
+
+Output:
+
+results/
+└── task_02/
+    └── matches_visualization.png
+
+The visualization provides a qualitative view of the correspondence distribution.
+
+The matches are concentrated primarily around textured structures and recognizable regions of the scene.
+
+However, visual inspection alone is not sufficient to determine geometric correctness.
+
+Therefore, the HPatches ground-truth homography will be used in the next task for quantitative evaluation.

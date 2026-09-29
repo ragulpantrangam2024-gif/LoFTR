@@ -1,0 +1,28 @@
+Stage 4 - Task 2
+Official Pretrained LoFTR Inference
+============================================================
+
+Device: cpu
+Checkpoint: D:\rwu\rwu jobs\Computer_Vision_Projects\LoFTR\official_loftr\weights\indoor_ds.ckpt
+
+Original image 0 shape: (1290, 968)
+Original image 1 shape: (1290, 968)
+
+Processed image 0 shape: (640, 480)
+Processed image 1 shape: (640, 480)
+
+Maximum image dimension: 640
+
+Model loading time: 0.7022 seconds
+Inference time: 14.0603 seconds
+
+Number of matches: 206
+Confidence minimum: 0.201274
+Confidence maximum: 0.567200
+Confidence mean: 0.290910
+Confidence median: 0.253034
+
+Important:
+This task uses the official pretrained ZJU3DV LoFTR implementation.
+The images were resized for CPU inference.
+The reported matches are raw pretrained LoFTR correspondences.
