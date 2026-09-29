@@ -1,0 +1,209 @@
+Stage 4 - Task 6
+LoFTR Failure Analysis and Confidence-Geometry Analysis
+======================================================================
+
+High-confidence threshold: 0.3
+Geometric failure threshold: 3.0 px
+
+SEQUENCE STATISTICS
+----------------------------------------------------------------------
+
+v_woman (viewpoint)
+Matches: 16
+Mean error: 3.6115 px
+Median error: 3.7619 px
+P90 error: 5.7067 px
+P95 error: 6.0980 px
+Maximum error: 6.2867 px
+≤1 px: 6.25%
+≤3 px: 43.75%
+≤5 px: 68.75%
+≤10 px: 100.00%
+Mean confidence: 0.2610
+Median confidence: 0.2556
+High-confidence matches: 2
+High-confidence failures: 2
+
+v_graffiti (viewpoint)
+Matches: 224
+Mean error: 2.5996 px
+Median error: 2.3683 px
+P90 error: 4.6110 px
+P95 error: 5.2990 px
+Maximum error: 7.5840 px
+≤1 px: 14.29%
+≤3 px: 63.39%
+≤5 px: 94.20%
+≤10 px: 100.00%
+Mean confidence: 0.2718
+Median confidence: 0.2509
+High-confidence matches: 63
+High-confidence failures: 23
+
+v_wall (viewpoint)
+Matches: 275
+Mean error: 1.6731 px
+Median error: 1.4281 px
+P90 error: 3.3063 px
+P95 error: 3.9962 px
+Maximum error: 6.6482 px
+≤1 px: 32.00%
+≤3 px: 88.00%
+≤5 px: 99.27%
+≤10 px: 100.00%
+Mean confidence: 0.3048
+Median confidence: 0.2791
+High-confidence matches: 108
+High-confidence failures: 3
+
+v_yard (viewpoint)
+Matches: 422
+Mean error: 1.8344 px
+Median error: 1.7423 px
+P90 error: 3.1057 px
+P95 error: 3.4338 px
+Maximum error: 4.5599 px
+≤1 px: 22.99%
+≤3 px: 87.91%
+≤5 px: 100.00%
+≤10 px: 100.00%
+Mean confidence: 0.3005
+Median confidence: 0.2704
+High-confidence matches: 163
+High-confidence failures: 16
+
+v_london (viewpoint)
+Matches: 202
+Mean error: 2.4346 px
+Median error: 2.2689 px
+P90 error: 4.2614 px
+P95 error: 4.8121 px
+Maximum error: 6.4513 px
+≤1 px: 14.36%
+≤3 px: 70.30%
+≤5 px: 96.04%
+≤10 px: 100.00%
+Mean confidence: 0.2930
+Median confidence: 0.2725
+High-confidence matches: 69
+High-confidence failures: 18
+
+i_ajuntament (illumination)
+Matches: 949
+Mean error: 0.5573 px
+Median error: 0.5510 px
+P90 error: 0.8574 px
+P95 error: 0.9362 px
+Maximum error: 1.3961 px
+≤1 px: 97.15%
+≤3 px: 100.00%
+≤5 px: 100.00%
+≤10 px: 100.00%
+Mean confidence: 0.3267
+Median confidence: 0.2928
+High-confidence matches: 454
+High-confidence failures: 0
+
+i_bologna (illumination)
+Matches: 185
+Mean error: 0.5408 px
+Median error: 0.5232 px
+P90 error: 0.8563 px
+P95 error: 0.9354 px
+Maximum error: 1.0703 px
+≤1 px: 98.38%
+≤3 px: 100.00%
+≤5 px: 100.00%
+≤10 px: 100.00%
+Mean confidence: 0.2809
+Median confidence: 0.2596
+High-confidence matches: 58
+High-confidence failures: 0
+
+i_londonbridge (illumination)
+Matches: 251
+Mean error: 0.8264 px
+Median error: 0.8344 px
+P90 error: 1.1886 px
+P95 error: 1.3109 px
+Maximum error: 1.5276 px
+≤1 px: 74.10%
+≤3 px: 100.00%
+≤5 px: 100.00%
+≤10 px: 100.00%
+Mean confidence: 0.2828
+Median confidence: 0.2552
+High-confidence matches: 78
+High-confidence failures: 0
+
+i_santuario (illumination)
+Matches: 524
+Mean error: 0.8802 px
+Median error: 0.9000 px
+P90 error: 1.2579 px
+P95 error: 1.3620 px
+Maximum error: 6.4640 px
+≤1 px: 64.12%
+≤3 px: 99.81%
+≤5 px: 99.81%
+≤10 px: 100.00%
+Mean confidence: 0.2989
+Median confidence: 0.2754
+High-confidence matches: 196
+High-confidence failures: 0
+
+i_school (illumination)
+Matches: 1329
+Mean error: 0.7443 px
+Median error: 0.7378 px
+P90 error: 1.1370 px
+P95 error: 1.2382 px
+Maximum error: 1.8563 px
+≤1 px: 79.68%
+≤3 px: 100.00%
+≤5 px: 100.00%
+≤10 px: 100.00%
+Mean confidence: 0.3286
+Median confidence: 0.2993
+High-confidence matches: 660
+High-confidence failures: 0
+
+i_zion (illumination)
+Matches: 1362
+Mean error: 0.7270 px
+Median error: 0.7221 px
+P90 error: 1.0753 px
+P95 error: 1.1825 px
+Maximum error: 1.6504 px
+≤1 px: 83.70%
+≤3 px: 100.00%
+≤5 px: 100.00%
+≤10 px: 100.00%
+Mean confidence: 0.3219
+Median confidence: 0.3016
+High-confidence matches: 694
+High-confidence failures: 0
+
+
+OVERALL MATCH ANALYSIS
+======================================================================
+Total evaluated matches: 5739
+Mean geometric error: 0.9833 px
+Median geometric error: 0.7693 px
+P90 geometric error: 1.8550 px
+P95 geometric error: 2.7779 px
+Overall ≤3 px: 95.89%
+Overall ≤5 px: 99.49%
+Overall ≤10 px: 100.00%
+
+
+HIGH-CONFIDENCE FAILURE ANALYSIS
+======================================================================
+High-confidence matches: 2545
+High-confidence matches with error > 3.0 px: 62
+High-confidence failure rate: 2.44%
+
+
+NO-MATCH SEQUENCES
+======================================================================
+v_bark
