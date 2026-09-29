@@ -1,0 +1,39 @@
+Stage 4 - Task 1
+Official LoFTR Architecture Study
+========================================
+
+IMPORTANT:
+This is an educational architecture demonstration.
+It is NOT the official pretrained LoFTR model.
+
+Image 1 original shape: (1290, 968)
+Image 2 original shape: (1290, 968)
+Resized image shape: (256, 256)
+
+Feature map image 1: (1, 64, 128, 128)
+Feature map image 2: (1, 64, 128, 128)
+
+Coarse grid: 16 x 16
+Coarse tokens: 256
+Embedding dimension: 64
+Attention heads: 8
+
+Self-attention image 1: (1, 8, 256, 256)
+Self-attention image 2: (1, 8, 256, 256)
+Cross-attention image 1 -> image 2: (1, 8, 256, 256)
+Cross-attention image 2 -> image 1: (1, 8, 256, 256)
+
+Similarity matrix: (1, 256, 256)
+Similarity minimum: 0.3924788534641266
+Similarity maximum: 0.9999997615814209
+Similarity mean: 0.6914494037628174
+Mutual nearest-neighbor matches: 256
+
+Architecture stages demonstrated:
+1. Dense CNN feature extraction
+2. Coarse feature representation
+3. 2D positional encoding
+4. Self-attention
+5. Cross-attention
+6. Coarse similarity matching
+7. Fine-level refinement concept
