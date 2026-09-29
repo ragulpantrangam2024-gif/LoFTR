@@ -1,0 +1,169 @@
+Stage 4 - Task 5
+Official LoFTR Multi-Sequence Evaluation
+======================================================================
+
+Device: cpu
+Maximum image dimension: 640px
+Total sequences requested: 12
+Successful sequences: 11
+Total runtime: 118.88 seconds
+
+SEQUENCE RESULTS
+----------------------------------------------------------------------
+
+v_woman (viewpoint)
+Status: success
+Matches: 16
+Mean error: 3.6115 px
+Median error: 3.7619 px
+≤ 1 px: 1/16 (6.25%)
+≤ 3 px: 7/16 (43.75%)
+≤ 5 px: 11/16 (68.75%)
+≤ 10 px: 16/16 (100.00%)
+Mean confidence: 0.2610
+Inference time: 11.50 s
+
+v_graffiti (viewpoint)
+Status: success
+Matches: 224
+Mean error: 2.5996 px
+Median error: 2.3683 px
+≤ 1 px: 32/224 (14.29%)
+≤ 3 px: 142/224 (63.39%)
+≤ 5 px: 211/224 (94.20%)
+≤ 10 px: 224/224 (100.00%)
+Mean confidence: 0.2718
+Inference time: 8.88 s
+
+v_wall (viewpoint)
+Status: success
+Matches: 275
+Mean error: 1.6731 px
+Median error: 1.4281 px
+≤ 1 px: 88/275 (32.00%)
+≤ 3 px: 242/275 (88.00%)
+≤ 5 px: 273/275 (99.27%)
+≤ 10 px: 275/275 (100.00%)
+Mean confidence: 0.3048
+Inference time: 8.55 s
+
+v_yard (viewpoint)
+Status: success
+Matches: 422
+Mean error: 1.8344 px
+Median error: 1.7423 px
+≤ 1 px: 97/422 (22.99%)
+≤ 3 px: 371/422 (87.91%)
+≤ 5 px: 422/422 (100.00%)
+≤ 10 px: 422/422 (100.00%)
+Mean confidence: 0.3005
+Inference time: 10.73 s
+
+v_london (viewpoint)
+Status: success
+Matches: 202
+Mean error: 2.4346 px
+Median error: 2.2689 px
+≤ 1 px: 29/202 (14.36%)
+≤ 3 px: 142/202 (70.30%)
+≤ 5 px: 194/202 (96.04%)
+≤ 10 px: 202/202 (100.00%)
+Mean confidence: 0.2930
+Inference time: 10.03 s
+
+v_bark (viewpoint)
+Status: no_matches
+
+i_ajuntament (illumination)
+Status: success
+Matches: 949
+Mean error: 0.5573 px
+Median error: 0.5510 px
+≤ 1 px: 922/949 (97.15%)
+≤ 3 px: 949/949 (100.00%)
+≤ 5 px: 949/949 (100.00%)
+≤ 10 px: 949/949 (100.00%)
+Mean confidence: 0.3267
+Inference time: 10.92 s
+
+i_bologna (illumination)
+Status: success
+Matches: 185
+Mean error: 0.5408 px
+Median error: 0.5232 px
+≤ 1 px: 182/185 (98.38%)
+≤ 3 px: 185/185 (100.00%)
+≤ 5 px: 185/185 (100.00%)
+≤ 10 px: 185/185 (100.00%)
+Mean confidence: 0.2809
+Inference time: 8.99 s
+
+i_londonbridge (illumination)
+Status: success
+Matches: 251
+Mean error: 0.8264 px
+Median error: 0.8344 px
+≤ 1 px: 186/251 (74.10%)
+≤ 3 px: 251/251 (100.00%)
+≤ 5 px: 251/251 (100.00%)
+≤ 10 px: 251/251 (100.00%)
+Mean confidence: 0.2828
+Inference time: 8.67 s
+
+i_santuario (illumination)
+Status: success
+Matches: 524
+Mean error: 0.8802 px
+Median error: 0.9000 px
+≤ 1 px: 336/524 (64.12%)
+≤ 3 px: 523/524 (99.81%)
+≤ 5 px: 523/524 (99.81%)
+≤ 10 px: 524/524 (100.00%)
+Mean confidence: 0.2989
+Inference time: 9.29 s
+
+i_school (illumination)
+Status: success
+Matches: 1329
+Mean error: 0.7443 px
+Median error: 0.7378 px
+≤ 1 px: 1059/1329 (79.68%)
+≤ 3 px: 1329/1329 (100.00%)
+≤ 5 px: 1329/1329 (100.00%)
+≤ 10 px: 1329/1329 (100.00%)
+Mean confidence: 0.3286
+Inference time: 11.29 s
+
+i_zion (illumination)
+Status: success
+Matches: 1362
+Mean error: 0.7270 px
+Median error: 0.7221 px
+≤ 1 px: 1140/1362 (83.70%)
+≤ 3 px: 1362/1362 (100.00%)
+≤ 5 px: 1362/1362 (100.00%)
+≤ 10 px: 1362/1362 (100.00%)
+Mean confidence: 0.3219
+Inference time: 10.06 s
+
+
+CATEGORY SUMMARY
+======================================================================
+Viewpoint successful sequences: 5
+Illumination successful sequences: 6
+
+Viewpoint
+Total valid matches: 1139
+Aggregate mean error: 2.0773 px
+Aggregate median error: 1.8589 px
+Aggregate ≤3 px: 79.37%
+Aggregate ≤5 px: 97.54%
+Aggregate ≤10 px: 100.00%
+
+Illumination
+Total valid matches: 4600
+Aggregate mean error: 0.7124 px
+Aggregate median error: 0.6979 px
+Aggregate ≤3 px: 99.98%
+Aggregate ≤5 px: 99.98%
+Aggregate ≤10 px: 100.00%

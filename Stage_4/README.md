@@ -774,3 +774,439 @@ to:
 The results therefore demonstrate that confidence filtering can improve the geometric quality of the retained matches, but increasingly aggressive filtering substantially reduces correspondence coverage.
 
 The non-monotonic behavior of the 3-pixel inlier rate also shows that confidence should not be treated as a perfect indicator of geometric correctness.
+
+
+# Stage 4 - Task 5: Multi-Sequence Evaluation
+
+## Overview
+
+This task evaluates the **official pretrained LoFTR model** across multiple image pairs from the HPatches dataset.
+
+The purpose is to determine how the pretrained LoFTR model behaves under different types of image changes, particularly:
+
+- viewpoint changes
+- illumination changes
+
+Unlike the previous tasks, which focused primarily on a single image pair, this task evaluates LoFTR across multiple HPatches sequences to examine the consistency and robustness of the matching behavior.
+
+The evaluation uses the **official pretrained LoFTR checkpoint**:
+
+```text
+official_loftr/weights/indoor_ds.ckpt
+
+The official LoFTR source repository is kept locally and is excluded from Git tracking.
+
+1. Objectives
+
+The main objectives of this task are:
+
+Evaluate official pretrained LoFTR on multiple HPatches sequences.
+Compare matching behavior under viewpoint and illumination changes.
+Measure the geometric accuracy of the predicted correspondences.
+Analyze the number of matches produced by LoFTR.
+Measure confidence statistics of the predicted correspondences.
+Identify difficult sequences and failure cases.
+Build a dataset-wide evaluation that can later be compared with SIFT, ORB, and the simplified LoFTR implementation.
+2. Dataset
+
+The evaluation uses the HPatches image matching dataset.
+
+Each sequence contains related images and a ground-truth homography between image 1 and image 2.
+
+For each sequence, the following files are used:
+
+1.ppm
+2.ppm
+H_1_2
+
+where:
+
+1.ppm = reference image
+2.ppm = transformed image
+H_1_2 = ground-truth homography mapping image 1 coordinates to image 2 coordinates
+
+The dataset is stored locally under:
+
+datasets/hpatches-sequences-release/
+
+The dataset is excluded from GitHub using .gitignore.
+
+3. Evaluated Sequences
+
+A total of 12 HPatches sequences were selected.
+
+Viewpoint sequences
+v_woman
+v_graffiti
+v_wall
+v_yard
+v_london
+v_bark
+Illumination sequences
+i_ajuntament
+i_bologna
+i_londonbridge
+i_santuario
+i_school
+i_zion
+
+The sequence names correspond to the actual directory names present in the local HPatches dataset.
+
+4. Experimental Setup
+Model
+
+The experiment uses the official pretrained LoFTR model.
+
+Model: LoFTR
+Checkpoint: indoor_ds.ckpt
+
+The model is loaded once and reused for all sequences.
+
+Device
+
+The evaluation was performed on:
+
+CPU
+Image preprocessing
+
+Images are resized while preserving their aspect ratio.
+
+The maximum image dimension is:
+
+640 pixels
+
+The resulting dimensions are adjusted to multiples of 8 to remain compatible with the LoFTR architecture.
+
+5. Homography Transformation
+
+The HPatches homography is defined in the original image coordinate system.
+
+Since the images are resized before LoFTR inference, the ground-truth homography must also be transformed into the resized coordinate system.
+
+The transformation used is:
+
+$$ H_{resized} = S_2 H_{original} S_1^{-1} $$
+
+where:
+
+\(H_{original}\) is the original HPatches homography
+\(S_1\) is the scaling matrix for image 1
+\(S_2\) is the scaling matrix for image 2
+\(H_{resized}\) is the homography used for geometric evaluation
+
+This ensures that the predicted LoFTR coordinates and ground-truth coordinates are expressed in the same coordinate system.
+
+6. LoFTR Matching
+
+For each image pair, LoFTR produces:
+
+mkpts0_f
+mkpts1_f
+mconf
+
+where:
+
+mkpts0_f = matched coordinates in image 1
+mkpts1_f = corresponding coordinates in image 2
+mconf = LoFTR confidence values
+
+No additional confidence filtering is applied in this task.
+
+The objective is to evaluate the raw output of the pretrained model.
+
+7. Geometric Error
+
+For every predicted correspondence, the point from image 1 is transformed using the ground-truth homography.
+
+For a correspondence:
+
+$$ p_0 \rightarrow p_1 $$
+
+the ground-truth projected point is:
+
+$$ \hat{p}_1 = H_{resized}p_0 $$
+
+The geometric error is the Euclidean distance:
+
+$$ e = \left\| \hat{p}_1-p_1 \right\|_2 $$
+
+The error is measured in pixels.
+
+A smaller error indicates that the predicted correspondence is closer to the ground-truth geometric transformation.
+
+8. Evaluation Metrics
+
+The following metrics are calculated for every sequence.
+
+Number of matches
+
+Number of correspondences returned by LoFTR.
+
+Mean geometric error
+
+Average geometric error across all evaluated matches.
+
+Median geometric error
+
+Median geometric error.
+
+The median is useful because it is less affected by a small number of large errors.
+
+Minimum and maximum error
+
+The minimum and maximum geometric errors are also recorded.
+
+Accuracy thresholds
+
+The percentage of matches satisfying:
+
+error ≤ 1 pixel
+error ≤ 3 pixels
+error ≤ 5 pixels
+error ≤ 10 pixels
+
+are reported.
+
+Confidence statistics
+
+The following LoFTR confidence statistics are recorded:
+
+mean confidence
+median confidence
+minimum confidence
+maximum confidence
+Runtime
+
+Inference time and total sequence runtime are recorded.
+
+9. Results
+
+The complete evaluation produced successful LoFTR correspondences on:
+
+11 / 12 sequences
+
+The sequence v_bark produced no matches.
+
+Viewpoint Results
+Sequence	Matches	Mean Error (px)	Median Error (px)	≤1 px	≤3 px	≤5 px	≤10 px
+v_woman	16	3.6115	3.7619	6.25%	43.75%	68.75%	100.00%
+v_graffiti	224	2.5996	2.3683	14.29%	63.39%	94.20%	100.00%
+v_wall	275	1.6731	1.4281	32.00%	88.00%	99.27%	100.00%
+v_yard	422	1.8344	1.7423	22.99%	87.91%	100.00%	100.00%
+v_london	202	2.4346	2.2689	14.36%	70.30%	96.04%	100.00%
+v_bark	0	—	—	—	—	—	—
+Viewpoint observations
+
+The viewpoint sequences show substantially different matching behavior.
+
+v_wall and v_yard produced relatively high proportions of geometrically accurate matches, with approximately 88% of matches within 3 pixels.
+
+v_london and v_graffiti produced lower 3-pixel rates of approximately 70% and 63%, respectively.
+
+v_woman produced only 16 matches, of which 7 were within 3 pixels.
+
+The v_bark sequence produced no LoFTR matches and therefore has no geometric error statistics.
+
+The results demonstrate that viewpoint changes can produce significantly different matching difficulty depending on the individual scene.
+
+10. Illumination Results
+Sequence	Matches	Mean Error (px)	Median Error (px)	≤1 px	≤3 px	≤5 px	≤10 px
+i_ajuntament	949	0.5573	0.5510	97.15%	100.00%	100.00%	100.00%
+i_bologna	185	0.5408	0.5232	98.38%	100.00%	100.00%	100.00%
+i_londonbridge	251	0.8264	0.8344	74.10%	100.00%	100.00%	100.00%
+i_santuario	524	0.8802	0.9000	64.12%	99.81%	99.81%	100.00%
+i_school	1329	0.7443	0.7378	79.68%	100.00%	100.00%	100.00%
+i_zion	1362	0.7270	0.7221	83.70%	100.00%	100.00%	100.00%
+Illumination observations
+
+The illumination sequences produced highly accurate geometric correspondences.
+
+All five illumination sequences with matches achieved:
+
+100% within 10 pixels
+
+Five sequences also achieved approximately 99.8–100% within 3 pixels, with i_santuario producing:
+
+99.81% within 3 pixels
+
+The mean geometric errors for all illumination sequences remained below 1 pixel.
+
+The lowest mean error was obtained on:
+
+i_bologna
+0.5408 px
+
+followed by:
+
+i_ajuntament
+0.5573 px
+11. Failure Case
+v_bark
+
+The v_bark sequence produced:
+
+Status: no_matches
+
+No LoFTR correspondences were returned for this image pair.
+
+Consequently, geometric error metrics cannot be calculated for this sequence.
+
+This is retained as part of the evaluation rather than removing the sequence from the dataset.
+
+A no-match case is important for the final research analysis because it demonstrates that the pretrained model does not necessarily produce usable correspondences for every image pair.
+
+12. Confidence Information
+
+The mean LoFTR confidence values varied between sequences.
+
+Examples include:
+
+v_woman          0.2610
+v_graffiti       0.2718
+v_wall           0.3048
+v_yard           0.3005
+v_london         0.2930
+
+i_ajuntament     0.3267
+i_bologna        0.2809
+i_londonbridge   0.2828
+i_santuario      0.2989
+i_school         0.3286
+i_zion           0.3219
+
+Confidence values are retained for later analysis.
+
+They will be used together with geometric error in subsequent research analysis to investigate whether LoFTR confidence can help distinguish reliable and unreliable matches.
+
+13. Results Storage
+
+The aggregate results are stored in:
+
+Stage_4/results/task_05/multisequence_results.csv
+
+The textual summary is stored in:
+
+Stage_4/results/task_05/multisequence_summary.txt
+
+Each successfully evaluated sequence also has its own directory containing:
+
+matches_and_errors.npz
+errors.csv
+
+For example:
+
+Stage_4/results/task_05/v_graffiti/
+├── matches_and_errors.npz
+└── errors.csv
+
+The .npz files contain:
+
+mkpts0
+mkpts1
+confidence
+errors
+H_original
+H_resized
+
+This allows the individual correspondences to be reanalyzed later without rerunning LoFTR.
+
+14. Interpretation
+
+The multi-sequence experiment provides evidence that the pretrained LoFTR model can produce highly accurate geometric correspondences across the evaluated HPatches illumination sequences.
+
+The viewpoint sequences show greater variation. Some viewpoint sequences achieve high geometric accuracy, while others produce fewer matches or larger errors.
+
+The results therefore provide two important observations for the final research evaluation:
+
+LoFTR performance depends strongly on the characteristics of the image pair.
+A model can produce highly accurate correspondences on successful sequences while still producing few or no correspondences on difficult sequences.
+
+These results should not be interpreted as a universal ranking of LoFTR against other feature-matching methods. The experiment evaluates a specific pretrained checkpoint on a selected subset of HPatches sequences using the evaluation protocol described above.
+
+15. Research Significance
+
+This task extends the previous single-sequence LoFTR evaluation into a multi-sequence experiment.
+
+The progression is:
+
+Task 1
+Official LoFTR architecture
+
+        ↓
+
+Task 2
+Official pretrained LoFTR inference
+
+        ↓
+
+Task 3
+Geometric accuracy evaluation
+
+        ↓
+
+Task 4
+Confidence analysis
+
+        ↓
+
+Task 5
+Multi-sequence evaluation
+
+This creates the foundation for the final research comparison between:
+
+SIFT
+ORB
+Simplified LoFTR
+Official pretrained LoFTR
+
+The multi-sequence results will also support later failure analysis and cross-condition comparisons.
+
+16. Limitations
+
+Several limitations should be considered.
+
+1. CPU inference
+
+The evaluation was performed on CPU, so the measured inference times should not be interpreted as representative of GPU inference performance.
+
+2. Selected HPatches subset
+
+Only 12 sequences were evaluated rather than the complete HPatches dataset.
+
+Therefore, the results represent this selected evaluation subset.
+
+3. Pretrained model
+
+The official LoFTR model was evaluated using the available pretrained checkpoint.
+
+No additional training or fine-tuning was performed.
+
+4. No confidence filtering
+
+The multi-sequence evaluation uses the raw LoFTR correspondences.
+
+Confidence thresholding was investigated separately in Task 4.
+
+5. Geometric metric
+
+The main geometric metric is point-transfer error using the HPatches ground-truth homography.
+
+It does not capture every aspect of correspondence quality.
+
+17. Conclusion
+
+Stage 4 Task 5 successfully evaluated the official pretrained LoFTR model across 12 selected HPatches sequences.
+
+Results were obtained for:
+
+11 / 12 sequences
+
+while:
+
+v_bark
+
+produced no matches.
+
+The illumination sequences showed consistently low geometric errors, while viewpoint sequences showed greater variation in both match count and geometric accuracy.
+
+The resulting per-match data and aggregate statistics provide the foundation for the final multi-condition comparison and failure analysis of the project.
