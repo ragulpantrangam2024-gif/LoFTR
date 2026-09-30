@@ -1,0 +1,31 @@
+STAGE 4 TASK 7C - CONTROLLED ORB BASELINE
+============================================================
+
+Dataset: HPatches
+Sequence: v_soldiers
+Image pair: 1.ppm -> 2.ppm
+Ground truth: H_1_2
+
+Image 1 shape: (1290, 968)
+Image 2 shape: (1290, 968)
+
+Image 1 keypoints: 1593
+Image 2 keypoints: 1118
+Image 1 descriptors: (1593, 32)
+Image 2 descriptors: (1118, 32)
+Descriptor type: uint8
+Descriptor size: 32 bytes
+
+Total KNN matches: 1593
+Lowe ratio threshold: 0.75
+Good matches: 219
+
+Mean geometric error: 13.6228 px
+Median geometric error: 1.3973 px
+Minimum geometric error: 0.1358 px
+Maximum geometric error: 981.3189 px
+
+Matches within 1 px: 60/219 (27.40%)
+Matches within 3 px: 187/219 (85.39%)
+Matches within 5 px: 203/219 (92.69%)
+Matches within 10 px: 207/219 (94.52%)

@@ -1811,3 +1811,116 @@ This experiment evaluates one HPatches image pair.
 Therefore, these results should not be interpreted as a general performance characterization of SIFT.
 
 The controlled comparison in Task 7 is intended to compare the methods under the same scene and geometric transformation, while the broader Stage 4 Task 5 evaluation examines official LoFTR across multiple HPatches sequences.
+
+# Stage 4 — Task 7C: Controlled ORB Baseline
+
+## Objective
+
+Task 7C establishes a controlled ORB baseline for the final feature-matching comparison.
+
+The experiment uses the same HPatches sequence, image pair, and ground-truth homography used in Task 7B and the LoFTR experiments.
+
+This allows ORB to be evaluated under the same image conditions as:
+
+- SIFT
+- Simplified LoFTR
+- Official pretrained LoFTR
+
+---
+
+## Experimental Setup
+
+### Dataset
+
+HPatches
+
+### Sequence
+
+`v_soldiers`
+
+### Image pair
+
+```text
+1.ppm → 2.ppm
+Ground-truth transformation
+H_1_2
+
+The ground-truth homography is used to project points from image 1 into image 2 and calculate geometric matching error.
+
+Method
+
+The ORB pipeline consists of:
+
+Load the two grayscale HPatches images.
+Detect ORB keypoints.
+Compute binary ORB descriptors.
+Perform KNN matching using Hamming distance.
+Apply Lowe's ratio test with threshold 0.75.
+Evaluate the surviving matches against the HPatches ground-truth homography.
+Calculate geometric error for every accepted match.
+Report error statistics and threshold-based geometric consistency.
+
+ORB uses binary descriptors, resulting in a descriptor shape of 32 bytes per keypoint.
+
+Results
+Metric	Result
+Image 1 keypoints	1,593
+Image 2 keypoints	1,118
+Image 1 descriptor shape	(1593, 32)
+Image 2 descriptor shape	(1118, 32)
+Descriptor type	uint8
+Descriptor size	32 bytes
+Total KNN matches	1,593
+Lowe ratio threshold	0.75
+Good matches	219
+Mean geometric error	13.6228 px
+Median geometric error	1.3973 px
+Minimum error	0.1358 px
+Maximum error	981.3189 px
+Within 1 px	60 / 219 (27.40%)
+Within 3 px	187 / 219 (85.39%)
+Within 5 px	203 / 219 (92.69%)
+Within 10 px	207 / 219 (94.52%)
+Interpretation
+
+The controlled ORB experiment produced 219 matches after the Lowe ratio test.
+
+The median geometric error was 1.3973 pixels, while 85.39% of the accepted matches were within 3 pixels of the ground-truth projected location.
+
+The mean geometric error was 13.6228 pixels. This is substantially larger than the median because several matches produced very large geometric errors. The maximum observed error was 981.3189 pixels.
+
+Consequently, mean error should be interpreted together with the median and threshold-based geometric statistics.
+
+Controlled SIFT and ORB Baseline
+
+Because Tasks 7B and 7C use the same image pair and ground-truth homography, their results can be compared directly as controlled classical baselines.
+
+Method	Good Matches	Median Error	Within 3 px
+SIFT	189	0.8917 px	91.53%
+ORB	219	1.3973 px	85.39%
+
+These values describe this particular v_soldiers image pair and should not be generalized to all scenes.
+
+The purpose of these experiments is to establish controlled classical baselines for the subsequent comparison with the simplified and official LoFTR implementations.
+
+Output Files
+
+Results are stored in:
+
+Stage_4/results/task_07c/
+
+Generated files:
+
+orb_summary.txt
+orb_errors.csv
+orb_results.npz
+orb_matches_v_soldiers.png
+Limitations
+
+This experiment evaluates one HPatches image pair.
+
+Therefore, these results should not be interpreted as a general characterization of ORB performance.
+
+The controlled comparison in Task 7 uses the same input pair across methods to reduce scene-dependent differences.
+
+The previous Stage 1 ORB experiment on v_woman remains a separate experiment and is not replaced by this controlled baseline.
