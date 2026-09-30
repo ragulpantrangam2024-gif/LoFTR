@@ -1,0 +1,5 @@
+method,dataset,sequence,image_pair,ground_truth,matches,mean_error_px,median_error_px,within_1px_percent,within_3px_percent,within_5px_percent,within_10px_percent
+SIFT,HPatches,v_soldiers,1.ppm -> 2.ppm,H_1_2,189,16.2697,0.8917,56.08,91.53,93.65,95.77
+ORB,HPatches,v_soldiers,1.ppm -> 2.ppm,H_1_2,219,13.6228,1.3973,27.4,85.39,92.69,94.52
+Simplified LoFTR,HPatches,v_soldiers,1.ppm -> 2.ppm,H_1_2,45,25.824,24.0964,nan,nan,nan,6.666666666666667
+Official LoFTR,HPatches,v_soldiers,1.ppm -> 2.ppm,H_1_2,206,2.5279,2.2551,15.53398058252427,67.96116504854369,95.14563106796116,99.51456310679612

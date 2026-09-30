@@ -1,0 +1,61 @@
+STAGE 4 TASK 7D - CONTROLLED FOUR-METHOD COMPARISON
+======================================================================
+
+Experimental setup
+Dataset: HPatches
+Sequence: v_soldiers
+Image pair: 1.ppm -> 2.ppm
+Ground truth: H_1_2
+
+The same image pair and ground-truth homography are used for the controlled comparison.
+
+RESULTS
+----------------------------------------------------------------------
+
+SIFT
+Matches: 189
+Mean error: 16.2697 px
+Median error: 0.8917 px
+Within 3 px: 91.53%
+Within 5 px: 93.65%
+Within 10 px: 95.77%
+
+ORB
+Matches: 219
+Mean error: 13.6228 px
+Median error: 1.3973 px
+Within 3 px: 85.39%
+Within 5 px: 92.69%
+Within 10 px: 94.52%
+
+Simplified LoFTR
+Matches: 45
+Mean error: 25.8240 px
+Median error: 24.0964 px
+Within 3 px: N/A
+Within 5 px: N/A
+Within 10 px: 6.67%
+
+Official LoFTR
+Matches: 206
+Mean error: 2.5279 px
+Median error: 2.2551 px
+Within 3 px: 67.96%
+Within 5 px: 95.15%
+Within 10 px: 99.51%
+
+======================================================================
+INTERPRETATION
+======================================================================
+
+SIFT and ORB are controlled classical baselines. Both were independently evaluated on the same v_soldiers image pair using H_1_2.
+
+Simplified LoFTR represents the research-oriented implementation developed during Stage 3. Its values come from predicted coarse-to-fine matching rather than oracle-guided fine refinement.
+
+Official LoFTR uses the pretrained indoor checkpoint and the same v_soldiers image pair.
+
+The comparison should not be interpreted as a universal ranking of the four methods. It represents their observed behavior on this particular HPatches image pair.
+
+Mean error is sensitive to large outliers. Median error and threshold-based geometric consistency should therefore be considered alongside mean error.
+
+The simplified LoFTR experiment did not report directly comparable 3-pixel or 5-pixel percentages, so these values are reported as N/A rather than being inferred.

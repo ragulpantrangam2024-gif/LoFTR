@@ -1924,3 +1924,201 @@ Therefore, these results should not be interpreted as a general characterization
 The controlled comparison in Task 7 uses the same input pair across methods to reduce scene-dependent differences.
 
 The previous Stage 1 ORB experiment on v_woman remains a separate experiment and is not replaced by this controlled baseline.
+
+# Stage 4 — Task 7D: Controlled Four-Method Comparison
+
+## Objective
+
+Task 7D provides the final controlled comparison between:
+
+- SIFT
+- ORB
+- Simplified LoFTR
+- Official pretrained LoFTR
+
+The purpose is to compare classical local feature matching with the detector-free Transformer-based LoFTR approach under the same image conditions.
+
+---
+
+## Controlled Experimental Setup
+
+### Dataset
+
+HPatches
+
+### Sequence
+
+`v_soldiers`
+
+### Image pair
+
+```text
+1.ppm → 2.ppm
+Ground truth
+H_1_2
+
+All four methods are associated with the same HPatches image pair and the same ground-truth homography.
+
+This is an important improvement over the earlier project-wide comparison, where the Stage 1 SIFT and ORB experiments used v_woman.
+
+Compared Methods
+1. SIFT
+
+SIFT is used as a classical sparse local feature baseline.
+
+The controlled SIFT results were generated in Task 7B.
+
+2. ORB
+
+ORB is used as a classical binary local feature baseline.
+
+The controlled ORB results were generated in Task 7C.
+
+3. Simplified LoFTR
+
+This is the research-oriented simplified LoFTR implementation developed during Stage 3.
+
+It combines the project components for:
+
+CNN feature extraction
+Dense feature representation
+Transformer matching
+Coarse matching
+Fine refinement
+
+The values used here come from the predicted coarse-to-fine experiment in Stage 3 Task 7.
+
+They are not based on the oracle-guided fine-search experiment.
+
+4. Official LoFTR
+
+This experiment uses the official pretrained LoFTR implementation and indoor pretrained checkpoint.
+
+The results were generated in Stage 4 Tasks 2 and 3.
+
+Results
+Method	Matches	Mean Error (px)	Median Error (px)	≤3 px	≤5 px	≤10 px
+SIFT	189	16.2697	0.8917	91.53%	93.65%	95.77%
+ORB	219	13.6228	1.3973	85.39%	92.69%	94.52%
+Simplified LoFTR	45	25.8240	24.0964	N/A	N/A	6.67%
+Official LoFTR	206	2.5279	2.2551	67.96%	95.15%	99.51%
+Interpretation
+SIFT
+
+SIFT produced 189 accepted matches after the Lowe ratio test.
+
+The median geometric error was 0.8917 pixels and 91.53% of accepted matches were within 3 pixels of the ground-truth projected location.
+
+The mean error was 16.2697 pixels because a small number of matches had very large geometric errors.
+
+ORB
+
+ORB produced 219 accepted matches.
+
+Its median geometric error was 1.3973 pixels and 85.39% of matches were within 3 pixels.
+
+The mean error was 13.6228 pixels and was similarly influenced by large outliers.
+
+Simplified LoFTR
+
+The simplified implementation produced 45 predicted matches.
+
+Its mean and median errors were 25.8240 and 24.0964 pixels respectively, and only 6.67% of the evaluated matches were within 10 pixels.
+
+This result should be interpreted in the context of the implementation: it is a simplified research-oriented implementation developed during this project and does not reproduce the training procedure or learned parameters of the official LoFTR model.
+
+The experiment therefore demonstrates the architecture and pipeline rather than providing a trained reproduction of LoFTR performance.
+
+The ≤3 px and ≤5 px percentages are reported as N/A because directly comparable values were not recorded in the Stage 3 evaluation.
+
+Official LoFTR
+
+Official pretrained LoFTR produced 206 matches.
+
+Its mean geometric error was 2.5279 pixels and its median was 2.2551 pixels.
+
+67.96% of evaluated matches were within 3 pixels, 95.15% were within 5 pixels, and 99.51% were within 10 pixels.
+
+Important Interpretation of Mean Error
+
+Mean geometric error should not be interpreted independently.
+
+Both SIFT and ORB have relatively large mean errors while their median errors are below 1.5 pixels.
+
+This occurs because a small number of extreme outliers substantially increase the mean.
+
+For example, the controlled experiments recorded maximum errors of approximately:
+
+SIFT: 1018 pixels
+ORB: 981 pixels
+
+Therefore, the comparison considers:
+
+Mean error
+Median error
+Threshold-based geometric consistency
+Number of evaluated matches
+
+rather than relying on a single metric.
+
+Simplified vs Official LoFTR
+
+A major purpose of this project was to understand LoFTR rather than simply use a pretrained model.
+
+The simplified implementation was developed progressively through:
+
+CNN feature extraction
+Dense feature representation
+Transformer matching
+Coarse matching
+Fine refinement
+End-to-end simplified LoFTR
+
+The controlled comparison demonstrates the difference between this educational implementation and the official pretrained system.
+
+The official model benefits from learned representations and training that are not present in the simplified implementation.
+
+Therefore, the simplified LoFTR result should not be interpreted as a reproduction of official LoFTR performance.
+
+Controlled Comparison vs Earlier Experiments
+
+The earlier Stage 1 SIFT and ORB experiments used:
+
+v_woman
+
+Those experiments remain valid as independent Stage 1 demonstrations.
+
+For the final Task 7 comparison, new controlled baselines were generated using:
+
+v_soldiers/1.ppm → 2.ppm
+
+This ensures that SIFT and ORB are evaluated under the same scene conditions as the LoFTR experiments.
+
+Limitations
+
+The comparison is based on one HPatches image pair.
+
+Therefore, it should not be interpreted as a universal ranking of the four methods.
+
+Scene characteristics, viewpoint changes, texture, image content, detector parameters, matching thresholds, and model configuration can all influence the results.
+
+The broader Stage 4 Task 5 evaluation was used separately to examine official LoFTR across multiple HPatches sequences.
+
+Generated Results
+
+Task 7D results are stored in:
+
+Stage_4/results/task_07d/
+
+Generated files:
+
+controlled_comparison.csv
+controlled_comparison_report.txt
+
+match_count_comparison.png
+mean_error_comparison.png
+median_error_comparison.png
+
+three_pixel_comparison.png
+five_pixel_comparison.png
+ten_pixel_comparison.png
