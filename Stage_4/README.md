@@ -1702,3 +1702,112 @@ High-confidence failure rate:         2.44%
 The analysis also identified v_bark as a no-match failure case.
 
 Overall, the task demonstrates that correspondence quality depends on the characteristics of the image pair. The evaluated illumination sequences produced consistently low geometric errors, while viewpoint sequences exhibited greater variation and contained the observed high-confidence geometric failures.
+
+# Stage 4 — Task 7B: Controlled SIFT Baseline
+
+## Objective
+
+Task 7B establishes a controlled SIFT baseline for the final feature-matching comparison.
+
+Unlike the earlier Stage 1 SIFT experiment, this experiment uses the same HPatches sequence and image pair that will be used for the LoFTR comparison.
+
+The purpose is to evaluate SIFT under the same image conditions as:
+
+- ORB
+- Simplified LoFTR
+- Official pretrained LoFTR
+
+---
+
+## Experimental Setup
+
+### Dataset
+
+HPatches
+
+### Sequence
+
+`v_soldiers`
+
+### Image pair
+
+```text
+1.ppm → 2.ppm
+Ground-truth transformation
+H_1_2
+
+The ground-truth homography is used to project points from image 1 into image 2 and calculate geometric matching error.
+
+Method
+
+The SIFT pipeline consists of:
+
+Load the two grayscale HPatches images.
+Detect SIFT keypoints.
+Compute 128-dimensional SIFT descriptors.
+Perform KNN matching using the L2 distance.
+Apply Lowe's ratio test with threshold 0.75.
+Evaluate the surviving matches against the HPatches ground-truth homography.
+Calculate geometric error for every accepted match.
+Report error statistics and threshold-based geometric consistency.
+Results
+Metric	Result
+Image 1 keypoints	618
+Image 2 keypoints	451
+Image 1 descriptor shape	(618, 128)
+Image 2 descriptor shape	(451, 128)
+Total KNN matches	618
+Lowe ratio threshold	0.75
+Good matches	189
+Mean geometric error	16.2697 px
+Median geometric error	0.8917 px
+Minimum error	0.0625 px
+Maximum error	1018.1237 px
+Within 1 px	106 / 189 (56.08%)
+Within 3 px	173 / 189 (91.53%)
+Within 5 px	177 / 189 (93.65%)
+Within 10 px	181 / 189 (95.77%)
+Interpretation
+
+The controlled SIFT experiment produced 189 matches after the Lowe ratio test.
+
+The median geometric error was 0.8917 pixels, while 91.53% of the accepted matches were within 3 pixels of the ground-truth projected location.
+
+The mean error was substantially higher at 16.2697 pixels because a small number of matches had very large geometric errors. The maximum observed error was 1018.1237 pixels.
+
+Therefore, both the median error and threshold-based statistics are useful when interpreting the matching quality. The mean alone does not represent the typical match in this experiment.
+
+Controlled Comparison Role
+
+This experiment is specifically intended as the SIFT baseline for Stage 4 Task 7.
+
+The same input pair will be used for:
+
+SIFT
+ORB
+Simplified LoFTR
+Official pretrained LoFTR
+
+This provides a more controlled comparison than combining the earlier Stage 1 v_woman results with the LoFTR results from v_soldiers.
+
+The previous Stage 1 SIFT experiment is retained as an independent classical feature-matching experiment and is not replaced by this result.
+
+Output Files
+
+Results are stored in:
+
+Stage_4/results/task_07b/
+
+Generated files:
+
+sift_summary.txt
+sift_errors.csv
+sift_results.npz
+sift_matches_v_soldiers.png
+Limitations
+
+This experiment evaluates one HPatches image pair.
+
+Therefore, these results should not be interpreted as a general performance characterization of SIFT.
+
+The controlled comparison in Task 7 is intended to compare the methods under the same scene and geometric transformation, while the broader Stage 4 Task 5 evaluation examines official LoFTR across multiple HPatches sequences.

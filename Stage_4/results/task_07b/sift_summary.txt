@@ -1,0 +1,29 @@
+STAGE 4 TASK 7B - CONTROLLED SIFT BASELINE
+============================================================
+
+Dataset: HPatches
+Sequence: v_soldiers
+Image pair: 1.ppm -> 2.ppm
+Ground truth: H_1_2
+
+Image 1 shape: (1290, 968)
+Image 2 shape: (1290, 968)
+
+Image 1 keypoints: 618
+Image 2 keypoints: 451
+Image 1 descriptors: (618, 128)
+Image 2 descriptors: (451, 128)
+
+Total KNN matches: 618
+Lowe ratio threshold: 0.75
+Good matches: 189
+
+Mean geometric error: 16.2697 px
+Median geometric error: 0.8917 px
+Minimum geometric error: 0.0625 px
+Maximum geometric error: 1018.1237 px
+
+Matches within 1 px: 106/189 (56.08%)
+Matches within 3 px: 173/189 (91.53%)
+Matches within 5 px: 177/189 (93.65%)
+Matches within 10 px: 181/189 (95.77%)

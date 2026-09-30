@@ -1,0 +1,5 @@
+method,stage,sequence,experiment,matches,mean_error,median_error,within_3_percent,within_5_percent,within_10_percent
+SIFT,Stage 1,v_woman,Single-pair,513,17.6902,0.3596,93.76,,
+ORB,Stage 1,v_woman,Single-pair,437,22.5343,0.943,89.93,,
+Simplified LoFTR,Stage 3,v_soldiers,Threshold 0.80,45,24.001,17.2945,,,6.67
+Official LoFTR,Stage 4,v_soldiers,Single-pair,206,2.5279,2.2551,67.96,95.15,99.51

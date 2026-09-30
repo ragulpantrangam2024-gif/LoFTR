@@ -1,0 +1,86 @@
+Stage 4 - Task 7
+Comprehensive Feature Matching Comparison
+======================================================================
+
+METHODS
+----------------------------------------------------------------------
+1. SIFT
+2. ORB
+3. Simplified LoFTR
+4. Official pretrained LoFTR
+
+EXPERIMENTAL RESULTS
+----------------------------------------------------------------------
+
+SIFT
+Stage: Stage 1
+Sequence: v_woman
+Experiment: Single-pair
+Matches: 513
+Mean error: 17.6902 px
+Median error: 0.3596 px
+≤3 px: 93.76%
+
+ORB
+Stage: Stage 1
+Sequence: v_woman
+Experiment: Single-pair
+Matches: 437
+Mean error: 22.5343 px
+Median error: 0.9430 px
+≤3 px: 89.93%
+
+Simplified LoFTR
+Stage: Stage 3
+Sequence: v_soldiers
+Experiment: Threshold 0.80
+Matches: 45
+Mean error: 24.0010 px
+Median error: 17.2945 px
+≤10 px: 6.67%
+
+Official LoFTR
+Stage: Stage 4
+Sequence: v_soldiers
+Experiment: Single-pair
+Matches: 206
+Mean error: 2.5279 px
+Median error: 2.2551 px
+≤3 px: 67.96%
+≤5 px: 95.15%
+≤10 px: 99.51%
+
+
+METHODOLOGICAL COMPARISON
+======================================================================
+
+SIFT
+Classical detector-and-descriptor approach. Keypoints are detected independently and descriptors are matched between images.
+
+ORB
+Classical binary feature approach using FAST-based keypoint detection and BRIEF-derived binary descriptors.
+
+Simplified LoFTR
+Research-oriented simplified implementation developed during Stage 3. It reproduces selected concepts such as dense features, Transformer matching, coarse matching and fine refinement, but it is not equivalent to the official trained LoFTR model.
+
+Official pretrained LoFTR
+Detector-free Transformer-based feature matching using the official pretrained LoFTR implementation and checkpoint.
+
+
+Important experimental limitation:
+
+The four methods were not all evaluated on exactly the same
+image pair and protocol.
+
+SIFT and ORB were evaluated on v_woman during Stage 1.
+
+The simplified LoFTR was evaluated on v_soldiers during Stage 3.
+
+The official LoFTR single-pair evaluation was performed on
+v_soldiers during Stage 4.
+
+Therefore, the numerical values should not be interpreted
+as a controlled benchmark ranking of all four methods.
+
+The comparison is intended to summarize the behavior observed
+throughout the project and identify methodological differences.
