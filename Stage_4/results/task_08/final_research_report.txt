@@ -1,0 +1,91 @@
+STAGE 4 TASK 8 - FINAL RESEARCH EVALUATION
+================================================================================
+
+PROJECT: LoFTR — Deep Feature Matching from Classical Methods to Transformers
+
+PURPOSE
+--------------------------------------------------------------------------------
+This final evaluation consolidates the experimental work performed across Stages 1–4. The project investigates the progression from classical local feature matching toward detector-free Transformer-based feature matching, using LoFTR as the main research reference.
+
+STAGE 1 — CLASSICAL FEATURE MATCHING
+--------------------------------------------------------------------------------
+Stage 1 established the fundamentals of image correspondence using SIFT, ORB, and geometric verification with RANSAC. The experiments introduced keypoints, descriptors, descriptor matching, Lowe's ratio test, homography-based geometric error, and inlier/outlier analysis.
+
+STAGE 2 — TRANSFORMER FUNDAMENTALS
+--------------------------------------------------------------------------------
+Stage 2 implemented and investigated self-attention, cross-attention, positional encoding, Transformer encoder blocks, and coarse-to-fine matching. These experiments were designed to understand the mechanisms that later appear in LoFTR rather than to reproduce a trained model.
+
+STAGE 3 — SIMPLIFIED LOFTR
+--------------------------------------------------------------------------------
+Stage 3 integrated CNN feature extraction, dense feature representation, Transformer-based matching, coarse matching, and fine refinement into a simplified LoFTR pipeline. The quantitative experiments demonstrated that untrained feature representations are insufficient for reliable end-to-end matching. The simplified implementation therefore serves primarily as an architectural and educational study.
+
+STAGE 4 — OFFICIAL LOFTR AND RESEARCH EVALUATION
+--------------------------------------------------------------------------------
+Stage 4 used the official LoFTR implementation with a pretrained indoor checkpoint. The evaluation included a single-pair quantitative experiment, confidence threshold analysis, multi-sequence evaluation, failure analysis, and a controlled comparison against SIFT, ORB, and the simplified LoFTR implementation.
+
+CONTROLLED FOUR-METHOD COMPARISON
+--------------------------------------------------------------------------------
+Dataset: HPatches
+Sequence: v_soldiers
+Image pair: 1.ppm -> 2.ppm
+Ground truth: H_1_2
+
+Method                  Matches   Mean(px)   Median(px)   <=3px     <=5px     <=10px
+--------------------------------------------------------------------------------
+SIFT                       189    16.2697       0.8917     91.53%    93.65%     95.77%
+ORB                        219    13.6228       1.3973     85.39%    92.69%     94.52%
+Simplified LoFTR            45    25.8240      24.0964        N/A       N/A      6.67%
+Official LoFTR             206     2.5279       2.2551     67.96%    95.15%     99.51%
+
+The controlled comparison uses the same image pair and ground-truth homography for all four methods. The comparison should therefore be interpreted as a controlled single-pair experiment rather than a universal benchmark.
+
+OFFICIAL LOFTR MULTI-SEQUENCE EVALUATION
+--------------------------------------------------------------------------------
+The broader Stage 4 evaluation successfully evaluated 11 of 12 selected HPatches sequences. The v_bark sequence produced no matches and was retained as a legitimate failure case.
+
+Across the 11 successful sequences, 5,739 matches were evaluated. The overall statistics obtained during Task 6 were:
+
+Mean error: 0.9833 px
+Median error: 0.7693 px
+P90 error: 1.8550 px
+P95 error: 2.7779 px
+Within 3 px: 95.89%
+Within 5 px: 99.49%
+Within 10 px: 100.00%
+
+These multi-sequence statistics provide broader evidence about the behavior of the official pretrained model than the single controlled image-pair comparison.
+
+CONFIDENCE ANALYSIS
+--------------------------------------------------------------------------------
+Task 4 showed a quality-versus-quantity relationship when increasing the LoFTR confidence threshold. On the controlled v_soldiers pair, increasing the threshold from 0.20 to 0.50 reduced the evaluated matches from 206 to 9 and reduced the mean geometric error from 2.5279 px to 1.5204 px. The 3-pixel inlier rate was not strictly monotonic, demonstrating that confidence thresholding changes both quantity and the composition of the retained matches.
+
+FAILURE ANALYSIS
+--------------------------------------------------------------------------------
+Task 6 identified 2,545 high-confidence matches using a confidence threshold of 0.30. Of these, 62 had geometric errors greater than 3 pixels, corresponding to a 2.44% high-confidence geometric failure rate.
+
+The v_bark sequence produced no matches. This result was retained rather than removed because failure to establish correspondences is itself relevant evidence when evaluating a matching system.
+
+RESEARCH INTERPRETATION
+--------------------------------------------------------------------------------
+The project demonstrates a clear conceptual progression. Classical methods rely on explicit keypoint detection and local descriptors, whereas LoFTR represents image regions densely and uses Transformer attention to reason about relationships between the two images.
+
+The Stage 3 experiments also demonstrate an important research lesson: implementing the architecture alone does not reproduce the behavior of a trained deep matching system. Learned feature representations and training are central to the performance of the official LoFTR model.
+
+The controlled comparison shows that classical methods can produce highly geometrically consistent matches on the evaluated image pair, while the pretrained official LoFTR model produces strong geometric consistency at broader error thresholds. The simplified implementation does not reach comparable performance, which is consistent with its untrained and simplified nature.
+
+LIMITATIONS
+--------------------------------------------------------------------------------
+1. The controlled four-method comparison uses one HPatches image pair.
+2. The simplified LoFTR is not an exact reproduction of the official LoFTR training pipeline or learned parameters.
+3. Mean geometric error is sensitive to extreme outliers.
+4. The official checkpoint used in this project is the pretrained indoor model.
+5. Results from different HPatches sequences should not be combined into a universal method ranking.
+6. Runtime and memory were not treated as primary accuracy metrics in the final comparison.
+
+FUTURE WORK
+--------------------------------------------------------------------------------
+Potential future work includes training the simplified LoFTR pipeline, evaluating additional LoFTR checkpoints, expanding the controlled comparison to more HPatches sequences, evaluating additional learned matching methods, performing precision-recall analysis, measuring runtime and memory usage, and investigating the v_bark no-match case in greater detail.
+
+FINAL CONCLUSION
+--------------------------------------------------------------------------------
+This project developed a progression from classical local feature matching to Transformer-based detector-free matching. Rather than treating LoFTR as a black box, the project reconstructed and investigated its conceptual building blocks before evaluating the official pretrained implementation. The resulting experiments provide both architectural understanding and quantitative evidence of the differences between handcrafted descriptors, simplified learned matching, and a pretrained detector-free Transformer matcher.

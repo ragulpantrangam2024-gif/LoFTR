@@ -1,0 +1,5 @@
+method,matches,mean_error_px,median_error_px,within_3px_percent,within_5px_percent,within_10px_percent
+SIFT,189.0,16.2697,0.8917,91.53,93.65,95.77
+ORB,219.0,13.6228,1.3973,85.39,92.69,94.52
+Simplified LoFTR,45.0,25.824,24.0964,nan,nan,6.666666666666667
+Official LoFTR,206.0,2.5279,2.2551,67.96116504854369,95.14563106796116,99.51456310679612
